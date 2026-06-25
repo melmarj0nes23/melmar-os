@@ -1,0 +1,38 @@
+{
+  "collections": {
+    "messages": {
+      "schema": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "message": {
+          "type": "string",
+          "required": true
+        },
+        "timestamp": {
+          "type": "timestamp",
+          "required": true
+        },
+        "color": {
+          "type": "string",
+          "required": false
+        },
+        "emoji": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "indexes": [
+        {
+          "fields": [
+            {
+              "fieldPath": "timestamp",
+              "order": "DESCENDING"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

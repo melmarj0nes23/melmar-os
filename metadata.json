@@ -1,0 +1,6 @@
+{
+  "name": "PortfolioOS",
+  "description": "An interactive, desktop-inspired operating system portfolio experience demonstrating elite frontend engineering and UI/UX design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
