@@ -49,6 +49,11 @@ export default function Window({ windowState, children }: WindowProps) {
     const startX = e.clientX;
     const startY = e.clientY;
 
+    const target = e.currentTarget as HTMLElement;
+    try {
+      target.setPointerCapture(e.pointerId);
+    } catch (err) {}
+
     const handlePointerMove = (moveEvent: PointerEvent) => {
       const deltaX = moveEvent.clientX - startX;
       const deltaY = moveEvent.clientY - startY;
@@ -59,7 +64,10 @@ export default function Window({ windowState, children }: WindowProps) {
       updateWindowSize(id, newWidth, newHeight);
     };
 
-    const handlePointerUp = () => {
+    const handlePointerUp = (upEvent: PointerEvent) => {
+      try {
+        target.releasePointerCapture(upEvent.pointerId);
+      } catch (err) {}
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerup", handlePointerUp);
     };
@@ -147,12 +155,13 @@ export default function Window({ windowState, children }: WindowProps) {
         id={`window-titlebar-${id}`}
         className={`w-full h-11 flex items-center justify-between px-4 select-none shrink-0 ${
           isFocused ? "bg-[#181615]/75 text-neutral-200" : "bg-[#141212]/50 text-neutral-500"
-        } border-b border-white/5 cursor-grab active:cursor-grabbing`}
+        } border-b border-white/5 cursor-grab active:cursor-grabbing touch-none`}
         onDoubleClick={handleTitleBarDoubleClick}
         onPointerDown={(e) => {
           // Trigger dragging if dragging is focused on title bar only (Framer drag handles dragging natively on custom elements or we handle coords manually)
           // Since we want dynamic drag constraints, we can use simple pointer move drag handler right here:
           if ((e.target as HTMLElement).closest(".control-dot")) return;
+          e.preventDefault();
           focusApp(id);
 
           if (isMaximized || (typeof window !== 'undefined' && window.innerWidth < 640)) return; // Disable drag if maximized or on mobile
@@ -162,6 +171,11 @@ export default function Window({ windowState, children }: WindowProps) {
           const startClientX = e.clientX;
           const startClientY = e.clientY;
 
+          const dragTarget = e.currentTarget as HTMLElement;
+          try {
+            dragTarget.setPointerCapture(e.pointerId);
+          } catch (err) {}
+
           const onDragMove = (moveEvent: PointerEvent) => {
             const nextX = startX + (moveEvent.clientX - startClientX);
             // Constrain dragging: prevent header from slipping beneath top MenuBar (40px)
@@ -169,7 +183,10 @@ export default function Window({ windowState, children }: WindowProps) {
             updateWindowPos(id, nextX, nextY);
           };
 
-          const onDragUp = () => {
+          const onDragUp = (upEvent: PointerEvent) => {
+            try {
+              dragTarget.releasePointerCapture(upEvent.pointerId);
+            } catch (err) {}
             window.removeEventListener("pointermove", onDragMove);
             window.removeEventListener("pointerup", onDragUp);
           };
@@ -254,7 +271,7 @@ export default function Window({ windowState, children }: WindowProps) {
       {!isMaximized && (
         <div
           id={`window-resize-handle-${id}`}
-          className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize shrink-0 z-[1001] flex items-end justify-end pointer-events-auto"
+          className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize shrink-0 z-[1001] flex items-end justify-end pointer-events-auto touch-none"
           onPointerDown={handleResizeStart}
         >
           {/* Custom vector lines representing diagonal grip */}

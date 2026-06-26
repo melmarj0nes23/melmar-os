@@ -20,7 +20,7 @@ import TetrisApp from "../apps/TetrisApp";
 
 import { Folder, Globe, Terminal, FileCode, Mail, Image as GalleryIcon, Sliders, Battery, Wifi, Star, FileText, Calendar, MessageSquare, Gamepad2, Users } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { db } from "../../lib/firebase";
+import { db, handleFirestoreError, OperationType } from "../../lib/firebase";
 import { doc, setDoc, updateDoc, increment, onSnapshot } from "firebase/firestore";
 
 export default function Desktop() {
@@ -58,11 +58,18 @@ export default function Desktop() {
             await updateDoc(visitorDocRef, { count: increment(1) });
           } catch (err) {
             // Document may not exist, initialize it
-            await setDoc(visitorDocRef, { count: 1 });
+            try {
+              await setDoc(visitorDocRef, { count: 1 });
+            } catch (setErr) {
+              handleFirestoreError(setErr, OperationType.WRITE, "stats/visitors");
+            }
           }
         }
       } catch (err) {
         console.error("Error updating visitor count:", err);
+        try {
+          handleFirestoreError(err, OperationType.WRITE, "stats/visitors");
+        } catch (e) {}
       }
     };
 
@@ -80,6 +87,9 @@ export default function Desktop() {
       }
     }, (error) => {
       console.error("Firestore Error listening to visitor count:", error);
+      try {
+        handleFirestoreError(error, OperationType.GET, "stats/visitors");
+      } catch (e) {}
     });
 
     // Simulate active connections fluctuation for fun visual effect
@@ -448,22 +458,6 @@ export default function Desktop() {
          }`}
          style={{ scrollbarWidth: "none" }}
       >
-        {/* Widget 1: Interactive Sticky Notes */}
-        <div className="bg-yellow-100/90 backdrop-blur-md text-neutral-800 p-4 rounded-2xl shadow-xl flex flex-col h-[180px] border border-yellow-200/50 group relative">
-          <div className="flex items-center justify-between border-b border-yellow-300/40 pb-2 mb-2">
-            <span className="text-[10px] font-mono font-bold tracking-widest text-amber-800 uppercase flex items-center gap-1.5">
-              <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500 animate-pulse" /> STICKY NOTE
-            </span>
-            <span className="text-[9px] font-mono text-amber-700/80">Auto-saved</span>
-          </div>
-          <textarea
-            value={stickyNote}
-            onChange={(e) => setStickyNote(e.target.value)}
-            className="flex-1 w-full bg-transparent resize-none outline-none text-xs font-semibold leading-relaxed text-amber-950 focus:ring-0 placeholder-amber-700/50"
-            placeholder="Type anything..."
-          />
-        </div>
-
         {/* Widget 2: Live Weather */}
         <div className="bg-[#1c1917]/45 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-xl flex flex-col justify-between h-[110px]">
           <div className="flex items-center justify-between">
@@ -589,6 +583,29 @@ export default function Desktop() {
               <span className="text-[9px] text-neutral-500">Real-time sync</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* 2c. Interactive Sticky Note Widget Column (Positioned in a separate column to the left of other widgets) */}
+      <div
+         id="desktop-sticky-note-column"
+         className={`absolute top-16 bottom-24 w-80 hidden lg:flex flex-col gap-5 pointer-events-auto z-[1] select-none transition-all duration-300 ${
+           settings.dockPosition === "right" ? "right-[432px]" : "right-[364px]"
+         }`}
+      >
+        <div className="bg-yellow-100/90 backdrop-blur-md text-neutral-800 p-4 rounded-2xl shadow-xl flex flex-col h-[320px] border border-yellow-200/50 group relative shrink-0">
+          <div className="flex items-center justify-between border-b border-yellow-300/40 pb-2 mb-2">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-amber-800 uppercase flex items-center gap-1.5">
+              <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500 animate-pulse" /> STICKY NOTE
+            </span>
+            <span className="text-[9px] font-mono text-amber-700/80">Auto-saved</span>
+          </div>
+          <textarea
+            value={stickyNote}
+            onChange={(e) => setStickyNote(e.target.value)}
+            className="flex-1 w-full bg-transparent resize-none outline-none text-xs font-semibold leading-relaxed text-amber-950 focus:ring-0 placeholder-amber-700/50"
+            placeholder="Type anything..."
+          />
         </div>
       </div>
 

@@ -1,32 +1,20 @@
 import { initializeApp, getApp, getApps } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 // To protect against exposed API keys in public repositories,
 // we prioritize VITE_ environment variables first, and fall back
-// to the local firebase-applet-config.json file values.
+// to the local firebase-applet-config.json file values loaded synchronously via Vite glob.
 const env = (import.meta as any).env || {};
 
-let appletConfig: any = {};
-let configLoaded = false;
-
-async function loadConfig() {
-  if (configLoaded) return;
-  try {
-    // Use a dynamic import with a variable and @vite-ignore so Vite/Rollup doesn't try to resolve it during build time.
-    // This prevents build failures in environments like Vercel where the gitignored config file is missing.
-    const configPath = "../../firebase-applet-config.json";
-    const module = await import(/* @vite-ignore */ configPath);
-    appletConfig = module.default || module;
-  } catch (e) {
-    // File not found or failed to load, which is expected in external deployments (e.g., Vercel)
-  }
-  configLoaded = true;
-}
-
-// Kick off config loading in the background immediately
-loadConfig().catch(() => {});
+// Eagerly/synchronously load the config file using Vite's glob import.
+// This prevents initializing Firebase with undefined config when accessed synchronously.
+const configs = (import.meta as any).glob("../../firebase-applet-config.json", { eager: true });
+const configKey = "../../firebase-applet-config.json";
+const appletConfig: any = (configs[configKey] as any)?.default || configs[configKey] || {};
 
 let dbInstance: Firestore | null = null;
+let authInstance: any = null;
 
 function getDb(): Firestore {
   if (dbInstance) return dbInstance;
@@ -40,13 +28,25 @@ function getDb(): Firestore {
     appId: env.VITE_FIREBASE_APP_ID || appletConfig.appId,
   };
 
-  // Ensure we don't initialize the app with missing/empty credentials if we are still waiting on loadConfig
-  // (unless we are in an external deployment where env variables are synchronous and available).
   const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
   const firestoreDbId = env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || appletConfig.firestoreDatabaseId;
 
   dbInstance = getFirestore(app, firestoreDbId);
   return dbInstance;
+}
+
+export function getAuthInstance() {
+  if (authInstance) return authInstance;
+  const app = getApps().length === 0 ? initializeApp({
+    apiKey: env.VITE_FIREBASE_API_KEY || appletConfig.apiKey,
+    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain,
+    projectId: env.VITE_FIREBASE_PROJECT_ID || appletConfig.projectId,
+    storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || appletConfig.storageBucket,
+    messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || appletConfig.messagingSenderId,
+    appId: env.VITE_FIREBASE_APP_ID || appletConfig.appId,
+  }) : getApp();
+  authInstance = getAuth(app);
+  return authInstance;
 }
 
 // Export a Proxy that intercepts all property/method access on db and forwards them
@@ -76,6 +76,59 @@ export const db = new Proxy({} as Firestore, {
     return Reflect.getPrototypeOf(getDb());
   }
 });
+
+export enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+export interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string | null;
+    email?: string | null;
+    emailVerified?: boolean | null;
+    isAnonymous?: boolean | null;
+    tenantId?: string | null;
+    providerInfo?: {
+      providerId?: string | null;
+      email?: string | null;
+    }[];
+  }
+}
+
+export function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  let auth: any = null;
+  try {
+    auth = getAuthInstance();
+  } catch (e) {
+    // Ignored
+  }
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth?.currentUser?.uid || null,
+      email: auth?.currentUser?.email || null,
+      emailVerified: auth?.currentUser?.emailVerified || null,
+      isAnonymous: auth?.currentUser?.isAnonymous || null,
+      tenantId: auth?.currentUser?.tenantId || null,
+      providerInfo: auth?.currentUser?.providerData?.map((provider: any) => ({
+        providerId: provider.providerId,
+        email: provider.email,
+      })) || []
+    },
+    operationType,
+    path
+  };
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
 
 
 
