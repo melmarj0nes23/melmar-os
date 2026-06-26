@@ -32,9 +32,10 @@ export default function Desktop() {
   const [stickyNote, setStickyNote] = useState(() => {
     const oldDefault1 = "💡 Tap here to write a quick note on your desktop!\n\n- Streamlined Dock & Desktop layouts.\n- Built real-time interactive widgets.\n- Double click Resume.pdf to view!";
     const oldDefault2 = "💡 Hello! Thank you for dropping by. Wanna connect?\n\n- Facebook: https://facebook.com/melmarj0nes23\n- GitHub: https://github.com/melmarj0nes23\n- Use the Terminal or Global Search to browse around.\n- View my Resume.pdf to know more about me!";
-    const newDefault = "💡 Hello! Thank you for dropping by. Wanna connect?\n\n- Facebook: https://facebook.com/melmarj0nes23\n- GitHub: https://github.com/melmarj0nes23\n- Use the Terminal or Global Search to browse around.\n- Launch VS Code to read through my contents.\n- View my Resume.pdf to know more about me!";
+    const oldDefault3 = "💡 Hello! Thank you for dropping by. Wanna connect?\n\n- Facebook: https://facebook.com/melmarj0nes23\n- GitHub: https://github.com/melmarj0nes23\n- Use the Terminal or Global Search to browse around.\n- Launch VS Code to read through my contents.\n- View my Resume.pdf to know more about me!";
+    const newDefault = "💡 Hello! Thank you for dropping by. Wanna connect?\n\n- Facebook: https://facebook.com/melmarj0nes23\n- GitHub: https://github.com/melmarj0nes23\n- Use the Terminal or Global Search to browse around.\n- Launch VS Code to read through my contents.\n- View my Resume.pdf to know more about me!\n- Please leave a message at the Messages Board too!";
     const stored = localStorage.getItem("desktop_sticky_note");
-    if (!stored || stored === oldDefault1 || stored === oldDefault2) {
+    if (!stored || stored === oldDefault1 || stored === oldDefault2 || stored === oldDefault3) {
       localStorage.setItem("desktop_sticky_note", newDefault);
       return newDefault;
     }
