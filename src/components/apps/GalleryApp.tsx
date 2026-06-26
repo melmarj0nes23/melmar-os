@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { galleryItems, projectsData } from "../../data/filesystem";
 import { GalleryItem } from "../../types";
 import { Grid, Eye, X, ChevronLeft, ChevronRight, ZoomIn, Lock, RotateCw, Share2, Plus, Folder, ArrowLeft, Image as ImageIcon, Sparkles } from "lucide-react";
@@ -9,6 +9,28 @@ export default function GalleryApp() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [lightboxItems, setLightboxItems] = useState<GalleryItem[]>(galleryItems);
+  const [savedScrollTop, setSavedScrollTop] = useState<number>(0);
+
+  const workspaceRef = useRef<HTMLDivElement>(null);
+
+  // Restore scroll position when going back to albums list view
+  useEffect(() => {
+    if (!selectedAlbumId && viewMode === "albums" && savedScrollTop > 0) {
+      const timer = setTimeout(() => {
+        if (workspaceRef.current) {
+          workspaceRef.current.scrollTop = savedScrollTop;
+        }
+      }, 30);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedAlbumId, viewMode, savedScrollTop]);
+
+  // Reset scroll to top of details view when entering an album
+  useEffect(() => {
+    if (selectedAlbumId && workspaceRef.current) {
+      workspaceRef.current.scrollTop = 0;
+    }
+  }, [selectedAlbumId]);
 
   const categories = ["all", "workstation", "hackathon", "certifications", "highlights"];
 
@@ -142,7 +164,7 @@ export default function GalleryApp() {
       </div>
 
       {/* MAIN CONTENT WORKSPACE */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+      <div ref={workspaceRef} className="flex-1 overflow-y-auto p-4 sm:p-6">
         
         {/* ================= VIEW 1: ALBUMS VIEW ================= */}
         {viewMode === "albums" && !selectedAlbumId && (
@@ -161,7 +183,12 @@ export default function GalleryApp() {
               {albums.map((album) => (
                 <div
                   key={album.id}
-                  onClick={() => setSelectedAlbumId(album.id)}
+                  onClick={() => {
+                    if (workspaceRef.current) {
+                      setSavedScrollTop(workspaceRef.current.scrollTop);
+                    }
+                    setSelectedAlbumId(album.id);
+                  }}
                   className="group flex flex-col gap-4 cursor-pointer bg-[#131110]/50 hover:bg-[#131110] border border-white/5 hover:border-white/10 p-4 rounded-2xl transition-all shadow-md hover:shadow-xl"
                 >
                   {/* Folder / Album Sleeve Stack effect */}

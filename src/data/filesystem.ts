@@ -228,7 +228,7 @@ export const projectsData: ProjectData[] = [
     tagline: "Unified massage therapies and package-booking directory.",
     description: "An organized, single-page informational platform built for Apros Wellness Spa. Built to categorize their extensive treatment catalogs, home/hotel packages, and wet area access slots into clean, intuitive sections, streamlining the booking flow.",
     technologies: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript (ES6+)", "React", "Vite"],
-    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros1.webp",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa1.webp",
     liveUrl: "https://apros-pasig.pages.dev/",
     githubUrl: "https://github.com/melmarj0nes23",
     role: "Web Developer & UI Designer",
@@ -240,10 +240,10 @@ export const projectsData: ProjectData[] = [
       "Deployed and cached globally with Cloudflare Pages"
     ],
     screenshots: [
-      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros1.webp",
-      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros2.webp",
-      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros3.webp",
-      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros4.webp"
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa4.webp"
     ]
   },
   {
@@ -559,7 +559,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Apros Wellness Spa Welcome",
     description: "Warm, calming introduction highlighting massages, pampering packages, and wet area services.",
     category: "highlights",
-    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros1.webp",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa1.webp",
     date: "2024"
   },
   {
@@ -567,7 +567,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Therapies Catalog & Pricings",
     description: "Highly readable table dividing therapies, hotel service upgrades, and prices clearly.",
     category: "highlights",
-    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros2.webp",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa2.webp",
     date: "2024"
   },
   {
@@ -575,7 +575,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Packages & Home Services List",
     description: "Information columns highlighting massage lengths, travel ranges, and spa rules.",
     category: "highlights",
-    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros3.webp",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa3.webp",
     date: "2024"
   },
   {
@@ -583,7 +583,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Instant Inquiry Trigger",
     description: "Direct reservation buttons triggering instant booking messages for easy booking.",
     category: "highlights",
-    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros4.webp",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/spa4.webp",
     date: "2024"
   },
   {

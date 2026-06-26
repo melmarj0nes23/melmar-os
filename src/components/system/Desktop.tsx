@@ -18,8 +18,10 @@ import PDFApp from "../apps/PDFApp";
 import MessagesApp from "../apps/MessagesApp";
 import TetrisApp from "../apps/TetrisApp";
 
-import { Folder, Globe, Terminal, FileCode, Mail, Image as GalleryIcon, Sliders, Battery, Wifi, Star, FileText, Calendar, MessageSquare, Gamepad2 } from "lucide-react";
+import { Folder, Globe, Terminal, FileCode, Mail, Image as GalleryIcon, Sliders, Battery, Wifi, Star, FileText, Calendar, MessageSquare, Gamepad2, Users } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { db } from "../../lib/firebase";
+import { doc, setDoc, updateDoc, increment, onSnapshot } from "firebase/firestore";
 
 export default function Desktop() {
   const { windows, openApp, settings, activeWindowId, closeApp } = useOS();
@@ -28,11 +30,68 @@ export default function Desktop() {
 
   // States for desktop background widgets
   const [stickyNote, setStickyNote] = useState(() => {
-    return localStorage.getItem("desktop_sticky_note") || "💡 Tap here to write a quick note on your desktop!\n\n- Streamlined Dock & Desktop layouts.\n- Built real-time interactive widgets.\n- Double click Resume.pdf to view!";
+    const oldDefault = "💡 Tap here to write a quick note on your desktop!\n\n- Streamlined Dock & Desktop layouts.\n- Built real-time interactive widgets.\n- Double click Resume.pdf to view!";
+    const newDefault = "💡 Hello! Thank you for dropping by. Wanna connect?\n\n- Facebook: https://facebook.com/melmarj0nes23\n- GitHub: https://github.com/melmarj0nes23\n- Use the Terminal or Global Search to browse around.\n- View my Resume.pdf to know more about me!";
+    const stored = localStorage.getItem("desktop_sticky_note");
+    if (!stored || stored === oldDefault) {
+      localStorage.setItem("desktop_sticky_note", newDefault);
+      return newDefault;
+    }
+    return stored;
   });
 
   const [cpuLoad, setCpuLoad] = useState(14);
   const [ramUsage, setRamUsage] = useState(4.2);
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [liveConnections, setLiveConnections] = useState<number>(3);
+
+  // Visitor Tracking Logic
+  useEffect(() => {
+    const visitorDocRef = doc(db, "stats", "visitors");
+
+    const trackVisitor = async () => {
+      try {
+        const isTracked = sessionStorage.getItem("portfolio_visitor_tracked");
+        if (!isTracked) {
+          sessionStorage.setItem("portfolio_visitor_tracked", "true");
+          try {
+            await updateDoc(visitorDocRef, { count: increment(1) });
+          } catch (err) {
+            // Document may not exist, initialize it
+            await setDoc(visitorDocRef, { count: 1 });
+          }
+        }
+      } catch (err) {
+        console.error("Error updating visitor count:", err);
+      }
+    };
+
+    trackVisitor();
+
+    // Listen to real-time changes
+    const unsubscribe = onSnapshot(visitorDocRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        if (typeof data.count === "number") {
+          setVisitorCount(data.count);
+        }
+      } else {
+        setVisitorCount(1);
+      }
+    }, (error) => {
+      console.error("Firestore Error listening to visitor count:", error);
+    });
+
+    // Simulate active connections fluctuation for fun visual effect
+    const connInterval = setInterval(() => {
+      setLiveConnections(Math.floor(2 + Math.random() * 4)); // 2 to 5 live visitors
+    }, 8000);
+
+    return () => {
+      unsubscribe();
+      clearInterval(connInterval);
+    };
+  }, []);
 
   // Sync sticky note to localStorage
   useEffect(() => {
@@ -234,14 +293,19 @@ export default function Desktop() {
             </div>
           </div>
 
-          {/* Quick Bio Card Widget */}
+          {/* Real-time Visitor Counter Widget */}
           <div className="bg-black/35 backdrop-blur-xl border border-white/10 p-3 rounded-2xl flex flex-col justify-between h-24">
             <span className="text-[9px] font-mono font-bold tracking-widest text-neutral-500 uppercase flex items-center gap-1">
-              <Star className="w-2.5 h-2.5 text-yellow-400" /> BIO WIDGET
+              <Users className="w-2.5 h-2.5 text-amber-400" /> VISITORS
             </span>
-            <p className="text-[10px] text-neutral-300 leading-normal line-clamp-3">
-              Crafting type-safe web dashboards, visual canvas animations, and server pipelines.
-            </p>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-xl font-bold text-white leading-none font-mono">
+                  {visitorCount !== null ? String(visitorCount).padStart(5, "0") : "-----"}
+                </p>
+                <p className="text-[9px] text-neutral-400 mt-1">Total visits</p>
+              </div>
+            </div>
           </div>
 
           {/* Live Calendar Widget */}
@@ -378,10 +442,11 @@ export default function Desktop() {
 
       {/* 2b. Elegant Desktop Widgets (Visible only on lg screens to avoid crowding mobile/tablet layouts) */}
       <div
-        id="desktop-widgets-sidebar"
-        className={`absolute top-16 bottom-24 w-80 hidden lg:flex flex-col gap-5 pointer-events-auto z-[1] transition-all duration-300 ${
-          settings.dockPosition === "right" ? "right-[92px]" : "right-6"
-        }`}
+         id="desktop-widgets-sidebar"
+         className={`absolute top-16 bottom-24 w-80 hidden lg:flex flex-col gap-5 pointer-events-auto z-[1] overflow-y-auto pr-1 select-none transition-all duration-300 ${
+           settings.dockPosition === "right" ? "right-[92px]" : "right-6"
+         }`}
+         style={{ scrollbarWidth: "none" }}
       >
         {/* Widget 1: Interactive Sticky Notes */}
         <div className="bg-yellow-100/90 backdrop-blur-md text-neutral-800 p-4 rounded-2xl shadow-xl flex flex-col h-[180px] border border-yellow-200/50 group relative">
@@ -501,6 +566,27 @@ export default function Desktop() {
                 <Wifi className="w-3.5 h-3.5 text-sky-400" /> Network Status
               </span>
               <span className="text-neutral-200">120 Mbps (Stable)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Widget 4: Real-time Visitor Counter */}
+        <div className="bg-[#1c1917]/45 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-xl flex flex-col justify-between h-[120px] shrink-0">
+          <div className="flex items-center justify-between border-b border-white/5 pb-2">
+            <span className="text-[10px] font-mono font-bold tracking-widest text-neutral-400 uppercase flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5 text-amber-400" /> VISITOR TRACKER
+            </span>
+          </div>
+
+          <div className="flex items-end justify-between mt-2">
+            <div>
+              <p className="text-3xl font-extrabold text-white leading-none font-mono tracking-tight">
+                {visitorCount !== null ? String(visitorCount).padStart(5, "0") : "-----"}
+              </p>
+              <p className="text-[10px] text-neutral-400 mt-1">Total Profile Visits</p>
+            </div>
+            <div className="flex flex-col items-end justify-end font-mono text-[10px]">
+              <span className="text-[9px] text-neutral-500">Real-time sync</span>
             </div>
           </div>
         </div>

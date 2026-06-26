@@ -33,6 +33,14 @@
           ]
         }
       ]
+    },
+    "stats": {
+      "schema": {
+        "count": {
+          "type": "number",
+          "required": true
+        }
+      }
     }
   }
 }

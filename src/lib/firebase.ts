@@ -52,16 +52,16 @@ function getDb(): Firestore {
 // Export a Proxy that intercepts all property/method access on db and forwards them
 // to the lazily-initialized Firestore instance. This keeps exports completely synchronous.
 export const db = new Proxy({} as Firestore, {
-  get(target, prop, receiver) {
+  get(target, prop) {
     const activeDb = getDb();
-    const value = Reflect.get(activeDb, prop, receiver);
+    const value = Reflect.get(activeDb, prop);
     if (typeof value === "function") {
       return value.bind(activeDb);
     }
     return value;
   },
-  set(target, prop, value, receiver) {
-    return Reflect.set(getDb(), prop, value, receiver);
+  set(target, prop, value) {
+    return Reflect.set(getDb(), prop, value);
   },
   has(target, prop) {
     return Reflect.has(getDb(), prop);
@@ -71,6 +71,9 @@ export const db = new Proxy({} as Firestore, {
   },
   getOwnPropertyDescriptor(target, prop) {
     return Reflect.getOwnPropertyDescriptor(getDb(), prop);
+  },
+  getPrototypeOf(target) {
+    return Reflect.getPrototypeOf(getDb());
   }
 });
 
