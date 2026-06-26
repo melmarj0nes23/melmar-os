@@ -287,7 +287,7 @@ efficient, and maintainable code...`;
           {/* ================= PAGE 1 ================= */}
           <div 
             ref={page1Ref}
-            className="print-page w-full max-w-[760px] aspect-[1/1.414] bg-white text-neutral-800 shadow-2xl p-10 sm:p-14 rounded border border-neutral-400 flex flex-col justify-between select-text"
+            className="print-page w-full max-w-[760px] aspect-auto sm:aspect-[1/1.414] bg-white text-neutral-800 shadow-2xl p-6 sm:p-14 rounded border border-neutral-400 flex flex-col justify-between select-text"
           >
             <div className="flex flex-col gap-6">
               {/* PDF Header Section */}
@@ -336,11 +336,11 @@ efficient, and maintainable code...`;
 
                 {/* Job 1 */}
                 <div className="flex flex-col gap-1.5">
-                  <div className="flex justify-between items-baseline">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4">
                     <h3 className="font-serif font-bold text-[13px] text-neutral-900">
                       Freelance Web Developer & Digital Architect
                     </h3>
-                    <span className="text-[10px] font-mono text-neutral-500">July 2024 – Present</span>
+                    <span className="text-[10px] font-mono text-neutral-500 shrink-0">July 2024 – Present</span>
                   </div>
                   <div className="flex justify-between items-baseline text-[10px] text-neutral-500 italic">
                     <span>Self-Employed</span>
@@ -357,11 +357,11 @@ efficient, and maintainable code...`;
 
                 {/* Job 2 */}
                 <div className="flex flex-col gap-1.5 border-t border-neutral-100 pt-3">
-                  <div className="flex justify-between items-baseline">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4">
                     <h3 className="font-serif font-bold text-[13px] text-neutral-900">
                       Workforce Specialist II / Workforce Scheduler
                     </h3>
-                    <span className="text-[10px] font-mono text-neutral-500">Dec 2022 – Jul 2024</span>
+                    <span className="text-[10px] font-mono text-neutral-500 shrink-0">Dec 2022 – Jul 2024</span>
                   </div>
                   <div className="flex justify-between items-baseline text-[10px] text-neutral-500 italic">
                     <span>VXI Global Holdings (PayPal Support)</span>
@@ -385,7 +385,7 @@ efficient, and maintainable code...`;
           {/* ================= PAGE 2 ================= */}
           <div 
             ref={page2Ref}
-            className="print-page w-full max-w-[760px] aspect-[1/1.414] bg-white text-neutral-800 shadow-2xl p-10 sm:p-14 rounded border border-neutral-400 flex flex-col justify-between select-text"
+            className="print-page w-full max-w-[760px] aspect-auto sm:aspect-[1/1.414] bg-white text-neutral-800 shadow-2xl p-6 sm:p-14 rounded border border-neutral-400 flex flex-col justify-between select-text"
           >
             <div className="flex flex-col gap-6">
               {/* Continuation Header */}
@@ -407,11 +407,11 @@ efficient, and maintainable code...`;
 
                 {/* Job 3 */}
                 <div className="flex flex-col gap-1.5 border-t border-neutral-100 pt-3">
-                  <div className="flex justify-between items-baseline">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4">
                     <h3 className="font-serif font-bold text-[13px] text-neutral-900">
                       Workforce Real-Time Analyst
                     </h3>
-                    <span className="text-[10px] font-mono text-neutral-500">Oct 2018 – Dec 2022</span>
+                    <span className="text-[10px] font-mono text-neutral-500 shrink-0">Oct 2018 – Dec 2022</span>
                   </div>
                   <div className="flex justify-between items-baseline text-[10px] text-neutral-500 italic">
                     <span>VXI Global Holdings (PayPal Support)</span>
@@ -427,11 +427,11 @@ efficient, and maintainable code...`;
 
                 {/* Job 4 */}
                 <div className="flex flex-col gap-1.5 border-t border-neutral-100 pt-3">
-                  <div className="flex justify-between items-baseline">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4">
                     <h3 className="font-serif font-bold text-[13px] text-neutral-900">
                       Subject Matter Expert
                     </h3>
-                    <span className="text-[10px] font-mono text-neutral-500">Jan 2018 – Oct 2018</span>
+                    <span className="text-[10px] font-mono text-neutral-500 shrink-0">Jan 2018 – Oct 2018</span>
                   </div>
                   <div className="flex justify-between items-baseline text-[10px] text-neutral-500 italic">
                     <span>VXI Global Holdings (PayPal Support)</span>
@@ -456,7 +456,7 @@ efficient, and maintainable code...`;
           {/* ================= PAGE 3 ================= */}
           <div 
             ref={page3Ref}
-            className="print-page w-full max-w-[760px] aspect-[1/1.414] bg-white text-neutral-800 shadow-2xl p-10 sm:p-14 rounded border border-neutral-400 flex flex-col justify-between select-text"
+            className="print-page w-full max-w-[760px] aspect-auto sm:aspect-[1/1.414] bg-white text-neutral-800 shadow-2xl p-6 sm:p-14 rounded border border-neutral-400 flex flex-col justify-between select-text"
           >
             <div className="flex flex-col gap-5">
               {/* Continuation Header */}
@@ -467,11 +467,11 @@ efficient, and maintainable code...`;
 
               {/* Job 5 Customer Service Representative */}
               <div className="flex flex-col gap-1.5">
-                <div className="flex justify-between items-baseline">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4">
                   <h3 className="font-serif font-bold text-[12px] text-neutral-900">
                     Customer Service Representative
                   </h3>
-                  <span className="text-[10px] font-mono text-neutral-500">Apr 2017 – Jan 2018</span>
+                  <span className="text-[10px] font-mono text-neutral-500 shrink-0">Apr 2017 – Jan 2018</span>
                 </div>
                 <ul className="list-disc pl-4 text-[10px] text-neutral-700 space-y-1 font-serif leading-relaxed">
                   <li>Conducted coaching and training refreshers for new hires and existing agents, improving team performance by 8%.</li>
@@ -481,11 +481,11 @@ efficient, and maintainable code...`;
 
               {/* Job 6 Technical Support Representative */}
               <div className="flex flex-col gap-1.5 border-t border-neutral-100 pt-2">
-                <div className="flex justify-between items-baseline">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4">
                   <h3 className="font-serif font-bold text-[12px] text-neutral-900">
                     Technical Support Representative
                   </h3>
-                  <span className="text-[10px] font-mono text-neutral-500">Apr 2015 – Apr 2017</span>
+                  <span className="text-[10px] font-mono text-neutral-500 shrink-0">Apr 2015 – Apr 2017</span>
                 </div>
                 <ul className="list-disc pl-4 text-[10px] text-neutral-700 space-y-1 font-serif leading-relaxed">
                   <li>Delivered expert technical support for AT&T ICM customers, guiding them through complex troubleshooting procedures.</li>
@@ -522,9 +522,9 @@ efficient, and maintainable code...`;
                   Education
                 </h2>
                 <div className="text-[11px] font-serif">
-                  <div className="flex justify-between items-baseline">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 sm:gap-4">
                     <span className="font-bold text-neutral-900">Nursing Education (Undergraduate)</span>
-                    <span className="text-[10px] font-mono text-neutral-500">Luzon, PH</span>
+                    <span className="text-[10px] font-mono text-neutral-500 shrink-0">Luzon, PH</span>
                   </div>
                   <span className="text-neutral-600 italic block text-[10px]">Luzon Colleges of Science and Technology</span>
                 </div>

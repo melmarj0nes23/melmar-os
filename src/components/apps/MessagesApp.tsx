@@ -261,7 +261,7 @@ export default function MessagesApp() {
                     value={name}
                     onChange={handleNameChange}
                     placeholder="e.g. Melmar Jones"
-                    className="w-full bg-[#1c1917]/90 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 outline-none focus:border-rose-500/50 transition-all duration-200"
+                    className="w-full bg-[#1c1917]/90 border border-white/10 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-500 outline-none focus:border-rose-500/50 transition-all duration-200"
                     required
                   />
                   <User className="absolute right-3.5 top-3 w-4 h-4 text-neutral-500 pointer-events-none" />
@@ -289,7 +289,7 @@ export default function MessagesApp() {
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Write your greeting..."
                   rows={3}
-                  className="w-full bg-[#1c1917]/90 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-neutral-500 outline-none focus:border-rose-500/50 transition-all duration-200 resize-none"
+                  className="w-full bg-[#1c1917]/90 border border-white/10 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-500 outline-none focus:border-rose-500/50 transition-all duration-200 resize-none"
                   required
                 />
               </div>

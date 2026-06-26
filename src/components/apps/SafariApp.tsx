@@ -190,7 +190,7 @@ export default function SafariApp() {
           <Globe className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
           <input
             type="text"
-            className="w-full bg-transparent outline-none border-none text-neutral-300 tracking-wide font-mono text-[11px]"
+            className="w-full bg-transparent outline-none border-none text-neutral-300 tracking-wide font-mono text-[16px] sm:text-[11px]"
             value={addressVal}
             readOnly
           />

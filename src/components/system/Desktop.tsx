@@ -246,7 +246,7 @@ export default function Desktop() {
                   </span>
                 )}
               </div>
-              <span className="text-[10px] font-semibold text-neutral-200 select-none tracking-wide text-center truncate max-w-[60px]">
+              <span className="text-[10px] font-semibold text-neutral-200 select-none tracking-wide text-center truncate max-w-[80px]">
                 {sc.label}
               </span>
             </div>
