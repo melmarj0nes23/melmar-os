@@ -1,16 +1,26 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import appletConfig from "../../firebase-applet-config.json";
+
+// To protect against exposed API keys in public repositories,
+// we prioritize VITE_ environment variables first, and fall back
+// to the local firebase-applet-config.json file values.
+const env = (import.meta as any).env || {};
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBVi2jUH8L4mN7ENu07D_vk9LQVHr3MI4g",
-  authDomain: "gen-lang-client-0408028869.firebaseapp.com",
-  projectId: "gen-lang-client-0408028869",
-  storageBucket: "gen-lang-client-0408028869.firebasestorage.app",
-  messagingSenderId: "283812114067",
-  appId: "1:283812114067:web:ee0c05160de7e5e2652766"
+  apiKey: env.VITE_FIREBASE_API_KEY || appletConfig.apiKey,
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || appletConfig.authDomain,
+  projectId: env.VITE_FIREBASE_PROJECT_ID || appletConfig.projectId,
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || appletConfig.storageBucket,
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || appletConfig.messagingSenderId,
+  appId: env.VITE_FIREBASE_APP_ID || appletConfig.appId,
 };
 
 const app = initializeApp(firebaseConfig);
 
+const firestoreDbId = env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || appletConfig.firestoreDatabaseId;
+
+
 // Specify the custom database ID as the second parameter
-export const db = getFirestore(app, "ai-studio-portfolioos-c0a79cdb-ad4c-4823-a7cf-08feb738ac1b");
+export const db = getFirestore(app, firestoreDbId);
+
