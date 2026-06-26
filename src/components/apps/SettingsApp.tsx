@@ -6,6 +6,7 @@ export default function SettingsApp() {
   const { settings, updateSettings, addNotification } = useOS();
 
   const wallpapers = [
+    { name: "Default Premium", desc: "Melmar default premium graphic artwork", style: "", isUrl: true, url: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/wall1.webp" },
     { name: "Cosmic Slate", desc: "Mysterious celestial obsidian gradient", style: "bg-gradient-to-tr from-purple-950 via-slate-950 to-indigo-950" },
     { name: "Sunset Silk", desc: "Velvety pink-to-gold dusk cascade", style: "bg-gradient-to-tr from-amber-950 via-rose-950 to-slate-950" },
     { name: "Forest Fog", desc: "Moody dynamic evergreen mist", style: "bg-gradient-to-tr from-emerald-950 via-zinc-950 to-stone-950" },
@@ -80,7 +81,10 @@ export default function SettingsApp() {
                       : "border-white/5 hover:border-white/20 hover:bg-white/5 bg-black/20"
                   }`}
                 >
-                  <div className={`w-full h-16 rounded-lg shadow-inner ${wp.style}`} />
+                  <div 
+                    className={`w-full h-16 rounded-lg shadow-inner ${wp.style}`} 
+                    style={wp.isUrl ? { backgroundImage: `url(${wp.url})`, backgroundSize: "cover", backgroundPosition: "center" } : {}}
+                  />
                   <div className="px-1">
                     <p className="text-[10px] font-semibold text-neutral-200 truncate">{wp.name}</p>
                     <p className="text-[8px] text-neutral-500 truncate leading-tight">{wp.desc}</p>

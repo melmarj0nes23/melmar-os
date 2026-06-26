@@ -74,6 +74,7 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
     { id: "settings", title: "Settings", isOpen: false, isMinimized: false, isMaximized: false, zIndex: 10, x: 320, y: 200, width: 560, height: 460, minWidth: 350, minHeight: 300 },
     { id: "pdf", title: "PDF Previewer - Melmar_Resume.pdf", isOpen: false, isMinimized: false, isMaximized: false, zIndex: 10, x: 100, y: 60, width: 800, height: 620, minWidth: 450, minHeight: 400 },
     { id: "messages", title: "Messages", isOpen: false, isMinimized: false, isMaximized: false, zIndex: 10, x: 180, y: 120, width: 700, height: 500, minWidth: 400, minHeight: 300 },
+    { id: "tetris", title: "Tetris Arcade", isOpen: false, isMinimized: false, isMaximized: false, zIndex: 10, x: 220, y: 80, width: 450, height: 600, minWidth: 320, minHeight: 450 },
   ]);
 
   // Load configuration settings from LocalStorage

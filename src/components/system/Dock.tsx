@@ -11,7 +11,8 @@ import {
   Sliders,
   FileText,
   Trash2,
-  MessageSquare
+  MessageSquare,
+  Gamepad2
 } from "lucide-react";
 
 interface DockItem {
@@ -36,6 +37,7 @@ export default function Dock() {
     { id: "messages", label: "Messages", icon: MessageSquare, colorClass: "bg-rose-500 text-white", action: () => handleLaunch("messages") },
     { id: "mail", label: "Mail", icon: Mail, colorClass: "bg-emerald-500 text-white", action: () => handleLaunch("mail") },
     { id: "gallery", label: "Gallery", icon: GalleryIcon, colorClass: "bg-rose-500 text-white", action: () => handleLaunch("gallery") },
+    { id: "tetris", label: "Tetris", icon: Gamepad2, colorClass: "bg-purple-600 text-white", action: () => handleLaunch("tetris") },
     { id: "settings", label: "Settings", icon: Sliders, colorClass: "bg-slate-500 text-white", action: () => handleLaunch("settings") },
   ];
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useOS } from "../../context/OSContext";
 import { virtualFileSystem, projectsData } from "../../data/filesystem";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, Terminal, FileCode, AppWindow, Sparkles } from "lucide-react";
+import { Search, Terminal, FileCode, AppWindow, Sparkles, Gamepad2 } from "lucide-react";
 
 interface SearchResult {
   id: string;
@@ -50,6 +50,7 @@ export default function SpotlightSearch() {
     { id: "app-safari", title: "Safari Browser", category: "apps", description: "Browse finished website case studies and bookmarks.", icon: AppWindow, action: () => openApp("safari") },
     { id: "app-mail", title: "Mail Client", category: "apps", description: "Compose messages or contact me directly.", icon: AppWindow, action: () => openApp("mail") },
     { id: "app-gallery", title: "Gallery App", category: "apps", description: "View pictures, awards, and certification certificates.", icon: AppWindow, action: () => openApp("gallery") },
+    { id: "app-tetris", title: "Tetris Arcade", category: "apps", description: "Play retro block stacking arcade minigame.", icon: Gamepad2, action: () => openApp("tetris") },
     { id: "app-settings", title: "Settings Panel", category: "apps", description: "Alter system wallpapers, dark mode, and accents.", icon: AppWindow, action: () => openApp("settings") },
   ];
 

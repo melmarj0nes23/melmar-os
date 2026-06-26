@@ -16,8 +16,9 @@ import GalleryApp from "../apps/GalleryApp";
 import SettingsApp from "../apps/SettingsApp";
 import PDFApp from "../apps/PDFApp";
 import MessagesApp from "../apps/MessagesApp";
+import TetrisApp from "../apps/TetrisApp";
 
-import { Folder, Globe, Terminal, FileCode, Mail, Image as GalleryIcon, Sliders, Battery, Wifi, Star, FileText, Calendar, MessageSquare } from "lucide-react";
+import { Folder, Globe, Terminal, FileCode, Mail, Image as GalleryIcon, Sliders, Battery, Wifi, Star, FileText, Calendar, MessageSquare, Gamepad2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function Desktop() {
@@ -53,6 +54,7 @@ export default function Desktop() {
     { id: "safari", label: "Projects", icon: Globe, colorClass: "bg-sky-400 text-white" },
     { id: "terminal", label: "Terminal.sh", icon: Terminal, colorClass: "bg-zinc-800 text-neutral-200 border border-neutral-700" },
     { id: "messages", label: "Messages", icon: MessageSquare, colorClass: "bg-rose-500 text-white hover:animate-pulse shadow-lg shadow-rose-950/40" },
+    { id: "tetris", label: "Tetris", icon: Gamepad2, colorClass: "bg-purple-600 text-white animate-pulse shadow-lg shadow-purple-950/40" },
   ];
 
   // Generate days for a mini-calendar widget
@@ -105,6 +107,7 @@ export default function Desktop() {
   }, []);
 
   const wallpapers = [
+    "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/wall1.webp", // Default Premium Image
     "bg-gradient-to-tr from-purple-950 via-slate-950 to-indigo-950", // Cosmic Slate
     "bg-gradient-to-tr from-amber-950 via-rose-950 to-slate-950",  // Sunset Silk
     "bg-gradient-to-tr from-emerald-950 via-zinc-950 to-stone-950",  // Forest Fog
@@ -113,6 +116,15 @@ export default function Desktop() {
   ];
 
   const currentWallpaperClass = wallpapers[settings.wallpaperIndex] || wallpapers[0];
+  const isImageUrl = currentWallpaperClass.startsWith("http");
+
+  const wallpaperStyle = isImageUrl ? {
+    backgroundImage: `url(${currentWallpaperClass})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  } : {};
+
+  const wallpaperClassName = isImageUrl ? "" : currentWallpaperClass;
 
   // Helper to render active app body inside window
   const renderAppContent = (id: string) => {
@@ -135,6 +147,8 @@ export default function Desktop() {
         return <PDFApp />;
       case "messages":
         return <MessagesApp />;
+      case "tetris":
+        return <TetrisApp />;
       default:
         return null;
     }
@@ -150,6 +164,7 @@ export default function Desktop() {
     { id: "mail", label: "Mail", icon: Mail, colorClass: "bg-emerald-500 text-white" },
     { id: "gallery", label: "Gallery", icon: GalleryIcon, colorClass: "bg-rose-500 text-white" },
     { id: "settings", label: "Settings", icon: Sliders, colorClass: "bg-slate-500 text-white" },
+    { id: "tetris", label: "Tetris", icon: Gamepad2, colorClass: "bg-purple-600 text-white animate-pulse shadow-md" },
     { id: "pdf", label: "Resume.pdf", icon: FileText, colorClass: "bg-red-600 text-white animate-pulse shadow-md" },
   ];
 
@@ -162,7 +177,7 @@ export default function Desktop() {
       || [...windows].sort((a, b) => b.zIndex - a.zIndex).find((w) => w.isOpen && !w.isMinimized);
 
     return (
-      <div id="mobile-os-container" className={`w-full h-full relative overflow-hidden flex flex-col justify-between p-4 ${currentWallpaperClass} select-none`}>
+      <div id="mobile-os-container" className={`w-full h-full relative overflow-hidden flex flex-col justify-between p-4 ${wallpaperClassName} select-none`} style={wallpaperStyle}>
 
         {/* FULLSCREEN ACTIVE APPLICATION WRAPPER */}
         <AnimatePresence>
@@ -309,7 +324,8 @@ export default function Desktop() {
   return (
     <div
       id="desktop-os-wrapper"
-      className={`w-full h-full relative overflow-hidden select-none ${currentWallpaperClass}`}
+      className={`w-full h-full relative overflow-hidden select-none ${wallpaperClassName}`}
+      style={wallpaperStyle}
     >
       {/* 1. Menu Bar fixed at top */}
       <MenuBar />

@@ -215,11 +215,16 @@ export default function TerminalApp() {
           break;
         }
         const appName = cmdParam.toLowerCase();
-        const availableApps = ["finder", "vscode", "terminal", "safari", "mail", "gallery", "settings", "pdf"];
+        const availableApps = ["finder", "vscode", "terminal", "safari", "mail", "gallery", "settings", "pdf", "tetris"];
         if (availableApps.includes(appName) || appName === "resume.pdf") {
           const targetApp = appName === "resume.pdf" ? "pdf" : appName;
           openApp(targetApp);
-          addTerminalLog({ id: `out-${Date.now()}`, type: "output", text: `Launching PDF Viewer for Melmar's Resume...` });
+          const launchMsg = targetApp === "pdf" 
+            ? `Launching PDF Viewer for Melmar's Resume...`
+            : targetApp === "tetris"
+            ? `Launching Tetris Retro Arcade minigame...`
+            : `Launching ${targetApp} applet...`;
+          addTerminalLog({ id: `out-${Date.now()}`, type: "output", text: launchMsg });
         } else {
           addTerminalLog({ id: `err-${Date.now()}`, type: "error", text: `open: '${cmdParam}' app registry target not found.` });
         }
