@@ -101,6 +101,198 @@ export const projectsData: ProjectData[] = [
       "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/cv2.webp",
       "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/cv3.webp"
     ]
+  },
+  {
+    id: "ads-alis",
+    title: "Ads-Alis Stream",
+    tagline: "High-performance, cookie-free, and advertisement-free video streaming utility.",
+    description: "Ads-Alis is a high-performance, responsive single-screen utility interface meant for security-minded, cookie-free, and advertisement-free video streaming. By consolidating sandbox constraints and privacy-centric request routing, Ads-Alis facilitates clutter-free media playback from multiple platforms concurrently.",
+    technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS v4", "Lucide React", "LocalStorage API", "Cloudflare Pages"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/alis1.webp",
+    liveUrl: "https://ads-alis.pages.dev/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "Creator & Lead Architect",
+    features: [
+      "Search Video in App securely",
+      "Picture-in-Picture Mode for convenient multitasking",
+      "Auto-Play Related Videos & Searches",
+      "Local Stream History logs database",
+      "Add, Rename, and Delete Bookmarks easily",
+      "Sandboxed ad-blocking stream structures"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/alis1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/alis2.webp"
+    ]
+  },
+  {
+    id: "flexi-dash",
+    title: "FlexiDash Financial Tracker",
+    tagline: "Sleek, modern financial tracking and personal command dashboard.",
+    description: "FlexiDash is a sleek, modern financial tracking and dashboard application designed to help users effortlessly manage their income, expenses, and custom products. Built with a focus on speed, beautiful aesthetics, and seamless user experience, it acts as a personal financial command center.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vercel", "NextAuth (Auth.js)", "Recharts", "Turso (SQLite)", "Drizzle ORM", "Resend API"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi1.webp",
+    liveUrl: "https://flexi-dash.vercel.app/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "Full-Stack Developer & Designer",
+    features: [
+      "Modern authentication via NextAuth and Resend API",
+      "Dynamic Analytics Dashboard with interactive Recharts graphs",
+      "Transaction Tracking with simple logging, editing, and deletion",
+      "Product Management for pre-setting unit service prices",
+      "Global Edge Architecture on Turso and Vercel Edge networks",
+      "Premium glassmorphic user interface & micro-animations"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi4.webp"
+    ]
+  },
+  {
+    id: "rian-fernandez",
+    title: "Rian Fernandez Atelier",
+    tagline: "Luxury couture digital showcase and custom fashion showroom.",
+    description: "Creating a clean, minimal website focused on high-quality visuals to showcase the studio's craftsmanship. A dedicated portfolio with a simple inquiry process makes it easier for potential clients to explore custom couture gown projects and get in touch.",
+    technologies: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript (ES6+)", "React", "Vite", "Firebase"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf1.webp",
+    liveUrl: "https://rf-atelier.pages.dev/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "Front-End Developer & Designer",
+    features: [
+      "High-resolution showcase focusing on detailed couture craftsmanship",
+      "Optimized assets and imagery for blazingly fast load times",
+      "Unified digital contact and inquiry channels",
+      "Beautiful minimal grid layout highlighting design quality",
+      "Deployed securely on Cloudflare Pages"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf4.webp"
+    ]
+  },
+  {
+    id: "mjn-salon",
+    title: "MJN Salon & Spa",
+    tagline: "Responsive mobile-friendly digital treatment catalog and scheduling portal.",
+    description: "A highly convenient, mobile-first website that simplifies the booking process for customers. It organizes the salon's treatments, services, pricing, business hours, and map locations into an easy-to-navigate layout, making information instantly available.",
+    technologies: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript (ES6+)", "React", "Vite"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn1.webp",
+    liveUrl: "https://mjn-salon.pages.dev/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "Front-End Engineer & UI Builder",
+    features: [
+      "Interactive digital menus detailing spa & salon services and prices",
+      "Mobile-friendly interface built with responsive Tailwind classes",
+      "Direct integration with social booking, calling, and messaging API triggers",
+      "Optimized for quick load times over global edge CDNs",
+      "Deployed effortlessly on Cloudflare Pages"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn4.webp"
+    ]
+  },
+  {
+    id: "nunez-dental",
+    title: "Nuñez Dental Clinic",
+    tagline: "Clean, professional, and highly accessible dental clinic portal.",
+    description: "A clean and professional dental care landing platform designed to make it simple for patients to learn about clinic hours, medical team credentials, location details, and treatment categories, answering common FAQs on a single page.",
+    technologies: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript (ES6+)", "React", "Vite"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic1.webp",
+    liveUrl: "https://nunez-dentalclinic.pages.dev/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "Lead Developer & Designer",
+    features: [
+      "Clean, modern aesthetic styled with comfortable medical-brand themes",
+      "Detailed dental treatment directories and scheduling charts",
+      "Fully responsive grids accommodating desktop and mobile viewports",
+      "Direct contact widgets, clinic hours, and map linkages",
+      "Static edge caching and continuous integration via Cloudflare Pages"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic4.webp"
+    ]
+  },
+  {
+    id: "apros-spa",
+    title: "Apros Wellness Spa",
+    tagline: "Unified massage therapies and package-booking directory.",
+    description: "An organized, single-page informational platform built for Apros Wellness Spa. Built to categorize their extensive treatment catalogs, home/hotel packages, and wet area access slots into clean, intuitive sections, streamlining the booking flow.",
+    technologies: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript (ES6+)", "React", "Vite"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros1.webp",
+    liveUrl: "https://apros-pasig.pages.dev/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "Web Developer & UI Designer",
+    features: [
+      "Well-structured directory organizing massages, therapies, and wet areas",
+      "Responsive, fluid layout optimized for both touchscreens and cursors",
+      "Direct call-to-action booking prompts and scheduler integration",
+      "Calm, therapeutic layout with high-contrast text and readable cards",
+      "Deployed and cached globally with Cloudflare Pages"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros4.webp"
+    ]
+  },
+  {
+    id: "mayas-flower",
+    title: "Maya's Flower Shop",
+    tagline: "High-resolution catalog and occasion-based bouquet showcase.",
+    description: "Maya's Flower Shop is a highly visual, clean digital catalog that displays premium floral arrangements sorted by occasion, enabling customers to easily browse choices and place inquiry tickets directly without messaging friction.",
+    technologies: ["HTML5", "Tailwind CSS", "JavaScript (ES6+)", "React", "Vite"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya1.webp",
+    liveUrl: "https://mayas-flowershop.pages.dev/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "Front-End Web Developer",
+    features: [
+      "Image-focused occasion grids (Valentine's, Mother's Day, Weddings)",
+      "Highly optimized and compressed assets keeping pages instant",
+      "Instant inquiry and communication routes for direct ordering",
+      "Cohesive pastel-toned branding aesthetics with fluid navigation",
+      "Fast static delivery powered by Cloudflare Pages"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya4.webp"
+    ]
+  },
+  {
+    id: "aiced-cafe",
+    title: "Aiced Café",
+    tagline: "Elegant coffee shop catalog, menu, and scheduling showcase.",
+    description: "Aiced Café's website delivers an elegant, high-contrast coffee shop catalog. It organizes menus, operational hours, location details, and direct messaging links on a lightweight single page with integrated interactive maps.",
+    technologies: ["HTML5", "CSS3", "Tailwind CSS", "JavaScript", "React", "Vite"],
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced1.webp",
+    liveUrl: "https://aiced-cafe.pages.dev/",
+    githubUrl: "https://github.com/melmarj0nes23",
+    role: "UI/UX Developer & Designer",
+    features: [
+      "Visual digital menus highlighting craft brews and hot pastries",
+      "Integrated location maps and operational hours scheduler",
+      "Warm café color styling with polished glass effects",
+      "Lightweight, mobile-responsive page columns loading instantly",
+      "Hosted on Cloudflare Pages for reliable CDN speed"
+    ],
+    screenshots: [
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced1.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced2.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced3.webp",
+      "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced4.webp"
+    ]
   }
 ];
 
@@ -216,6 +408,246 @@ export const galleryItems: GalleryItem[] = [
     description: "Pristine grid resume styling system ready for immediate single-click PDF downloads.",
     category: "highlights",
     imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/cv3.webp",
+    date: "2025"
+  },
+  {
+    id: "ads-alis-scr-1",
+    title: "Ads-Alis Screen Player",
+    description: "Clutter-free, ad-blocking stream playback module supporting YouTube, Vimeo, and Dailymotion streaming.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/alis1.webp",
+    date: "2024"
+  },
+  {
+    id: "ads-alis-scr-2",
+    title: "Bookmark Management Showcase",
+    description: "Responsive utility sidebar enabling search, bookmarks, stream history logs, and customization client-side.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/alis2.webp",
+    date: "2024"
+  },
+  {
+    id: "flexi-dash-scr-1",
+    title: "FlexiDash Dashboard",
+    description: "Personal financial command center featuring glassmorphism, responsive visual summary metrics, and active charts.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi1.webp",
+    date: "2025"
+  },
+  {
+    id: "flexi-dash-scr-2",
+    title: "Interactive Analytics Chart",
+    description: "Beautiful Recharts analytical graphics visualizing dynamic income, expenditures, and net financial health.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi2.webp",
+    date: "2025"
+  },
+  {
+    id: "flexi-dash-scr-3",
+    title: "Transaction Management View",
+    description: "Granular transaction ledger where users can effortlessly log, search, edit, and delete expense inputs.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi3.webp",
+    date: "2025"
+  },
+  {
+    id: "flexi-dash-scr-4",
+    title: "Product & Expense Ledger",
+    description: "Custom service product library designed to save unit pricings for rapid attachment to invoices and transactions.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/flexi4.webp",
+    date: "2025"
+  },
+  {
+    id: "rian-fernandez-scr-1",
+    title: "Atelier Showcase Landing",
+    description: "Elegant, minimal welcome landing designed with modern typography to showcase high-fashion craftsmanship.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf1.webp",
+    date: "2024"
+  },
+  {
+    id: "rian-fernandez-scr-2",
+    title: "Couture Gown Portfolio Grid",
+    description: "Distraction-free high-fidelity portfolio grid organizing spectacular wedding gowns and design records.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf2.webp",
+    date: "2024"
+  },
+  {
+    id: "rian-fernandez-scr-3",
+    title: "Craftsmanship Detail Zoom",
+    description: "Optimized image rendering pipeline allowing patients or customers to appreciate pristine dress tailoring details.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf3.webp",
+    date: "2024"
+  },
+  {
+    id: "rian-fernandez-scr-4",
+    title: "Client Enquiry Funnel",
+    description: "Streamlined consultation and custom-gown enquiry forms converting social media traffic to booked projects.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/rf4.webp",
+    date: "2024"
+  },
+  {
+    id: "mjn-salon-scr-1",
+    title: "MJN Salon & Spa Hero",
+    description: "Fluid, mobile-friendly landing panel directing visitors to services, catalog treatments, and directions.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn1.webp",
+    date: "2024"
+  },
+  {
+    id: "mjn-salon-scr-2",
+    title: "Treatments & Price Guide",
+    description: "Polished price-sheets and hair treatment list layout, helping clients browse services upfront.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn2.webp",
+    date: "2024"
+  },
+  {
+    id: "mjn-salon-scr-3",
+    title: "Operational Hours Calendar",
+    description: "Clean schedules showing open hours, telephone numbers, and coordinates on social networks.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn3.webp",
+    date: "2024"
+  },
+  {
+    id: "mjn-salon-scr-4",
+    title: "Mobile Appointment Booking",
+    description: "Direct instant booking buttons and telephone linkage for convenient appointment booking.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/mjn4.webp",
+    date: "2024"
+  },
+  {
+    id: "nunez-dental-scr-1",
+    title: "Dental Portal Welcome Screen",
+    description: "Responsive clinic welcome viewport showing emergency hours, treatment lists, and address pointers.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic1.webp",
+    date: "2024"
+  },
+  {
+    id: "nunez-dental-scr-2",
+    title: "Treatment Descriptions Grid",
+    description: "Clear informational list covering cosmetic, restorative, and pediatric dental treatment solutions.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic2.webp",
+    date: "2024"
+  },
+  {
+    id: "nunez-dental-scr-3",
+    title: "Clinic Operating Hours",
+    description: "Stately business hours listing with interactive visual cues to prevent appointment booking overlap.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic3.webp",
+    date: "2024"
+  },
+  {
+    id: "nunez-dental-scr-4",
+    title: "Dentist Profiles & Team Info",
+    description: "Patient-centered directory introducing certified dental surgeons and treatment assistants.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/clinic4.webp",
+    date: "2024"
+  },
+  {
+    id: "apros-spa-scr-1",
+    title: "Apros Wellness Spa Welcome",
+    description: "Warm, calming introduction highlighting massages, pampering packages, and wet area services.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros1.webp",
+    date: "2024"
+  },
+  {
+    id: "apros-spa-scr-2",
+    title: "Therapies Catalog & Pricings",
+    description: "Highly readable table dividing therapies, hotel service upgrades, and prices clearly.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros2.webp",
+    date: "2024"
+  },
+  {
+    id: "apros-spa-scr-3",
+    title: "Packages & Home Services List",
+    description: "Information columns highlighting massage lengths, travel ranges, and spa rules.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros3.webp",
+    date: "2024"
+  },
+  {
+    id: "apros-spa-scr-4",
+    title: "Instant Inquiry Trigger",
+    description: "Direct reservation buttons triggering instant booking messages for easy booking.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/apros4.webp",
+    date: "2024"
+  },
+  {
+    id: "mayas-flower-scr-1",
+    title: "Maya's Flower Shop Homepage",
+    description: "Lively visual showcase centered on floral arrangements, keeping photography compressed but extremely crisp.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya1.webp",
+    date: "2024"
+  },
+  {
+    id: "mayas-flower-scr-2",
+    title: "Floral Occasions & Arrangement Grid",
+    description: "Beautiful visual catalog highlighting custom bridal bundles, rose bouquets, and gift grids.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya2.webp",
+    date: "2024"
+  },
+  {
+    id: "mayas-flower-scr-3",
+    title: "Occasion Categorized Lists",
+    description: "Frictionless grouping making arrangements searchable by holiday theme (Valentine's, anniversaries, etc.).",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya3.webp",
+    date: "2024"
+  },
+  {
+    id: "mayas-flower-scr-4",
+    title: "Contact & Ordering Page",
+    description: "Direct contact prompts linking clients with florists for custom orders and instant delivery notes.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/maya4.webp",
+    date: "2024"
+  },
+  {
+    id: "aiced-cafe-scr-1",
+    title: "Aiced Café Digital Front",
+    description: "Inviting single-page café storefront styled with deep brown branding shades and glass elements.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced1.webp",
+    date: "2025"
+  },
+  {
+    id: "aiced-cafe-scr-2",
+    title: "Coffee & Pastry Visual Menu",
+    description: "Interactive responsive menu table grouping lattes, single-origins, pastries, and daily pricing charts.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced2.webp",
+    date: "2025"
+  },
+  {
+    id: "aiced-cafe-scr-3",
+    title: "Warm Café Aesthetic Details",
+    description: "Visual panels optimized to set a relaxing vibe, keeping mobile layouts beautifully consistent.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced3.webp",
+    date: "2025"
+  },
+  {
+    id: "aiced-cafe-scr-4",
+    title: "Interactive Maps & Social Widgets",
+    description: "Embedded location map and operational schedule widgets helping walk-ins get directions easily.",
+    category: "highlights",
+    imageUrl: "https://cdn.jsdelivr.net/gh/melmarj0nes23/melmar-assets@main/images/aiced4.webp",
     date: "2025"
   }
 ];
@@ -474,6 +906,108 @@ TinginCV is an automated resume optimization and ATS simulation platform. It req
 - **Recruiter reviews**: Detailed, point-by-point suggestion metrics
 - **Skills Gap Analysis**: Highlight missing keywords and match indices
 - **Pristine PDF Exports**: Ready-to-send ATS-friendly CV formats
+` },
+  { name: "ads-alis-stream.md", type: "file", path: "/projects/ads-alis-stream.md", icon: "file-text", content: `# Ads-Alis Stream
+
+Ad-free, cookie-free, and high-performance video streaming utility platform.
+
+### Story & Purpose
+The project was engineered to facilitate clutter-free and secure media playback. Ads-Alis is a high-performance single-screen utility interface that consolidates sandboxed iframe controls and custom request routes, preventing advertisements, cookies, and intrusive scripts across supported major video networks.
+
+### Features
+- **Search Video In-App**: Search and view contents immediately
+- **Picture-in-Picture Mode**: Smooth multitask viewing with zero overlay lag
+- **Bookmark Hub**: Add, rename, or delete video bookmarks
+- **Local Logs**: Client-side stream history tracking and automated related-search recommendations
+- **Edge Deployment**: Cached on Cloudflare Pages global network for instant load times
+` },
+  { name: "flexi-dash.md", type: "file", path: "/projects/flexi-dash.md", icon: "file-text", content: `# FlexiDash - Financial Tracker
+
+Sleek personal financial tracker, interactive analytics dashboard, and product ledger.
+
+### Story & Purpose
+To help users effortlessly track incoming and outgoing financial transactions, I built FlexiDash. It combines elegant glassmorphic visuals with high-speed performance, featuring unified charts, pre-set service product catalogues, and secure email authentication.
+
+### Architecture
+- **Framework**: Next.js with React 18, TypeScript, Tailwind CSS
+- **Authentication**: NextAuth.js (Auth.js) and Resend API password recoveries
+- **Database**: Serverless Turso SQLite with Drizzle ORM
+- **Deployment**: Vercel Edge network for instant load times
+` },
+  { name: "rian-fernandez-atelier.md", type: "file", path: "/projects/rian-fernandez-atelier.md", icon: "file-text", content: `# Rian Fernandez Atelier
+
+Clean and minimal luxury couture digital portfolio showcase.
+
+### Story & Purpose
+The studio previously relied on social channels to share their couture gown portfolio. Image compression degraded the fine tailorial craftsmanship, and there was no clean inquiry process. Creating a minimalist, high-quality showcase resolved this by focusing entirely on distortion-free media and easy direct client inquiry forms.
+
+### Actions Taken
+- Built using HTML5, CSS3, Tailwind CSS, React, and Vite
+- Optimized images and assets for blazingly fast global loading
+- Integrated a direct contact funnel and deployed on Cloudflare Pages
+` },
+  { name: "mjn-salon-spa.md", type: "file", path: "/projects/mjn-salon-spa.md", icon: "file-text", content: `# MJN Salon & Spa
+
+Responsive, mobile-first booking portal and digital treatment catalog.
+
+### Story & Purpose
+Customers had to continuously send messages just to ask about basic treatments, operational hours, or spa prices. This mobile-optimized single-page website organizes salon treatment menus, price lists, hours, and direct navigation links in one fast-loading workspace.
+
+### Key Metrics
+- Reduced customer inquiry wait time significantly
+- Boosted direct online bookings with one-click appointment triggers
+- Built with HTML5, CSS3, Tailwind CSS, React, and Vite, hosted on Cloudflare Pages
+` },
+  { name: "nunez-dental-clinic.md", type: "file", path: "/projects/nunez-dental-clinic.md", icon: "file-text", content: `# Nuñez Dental Clinic
+
+Clean, professional, and accessible dentist clinic informational website.
+
+### Story & Purpose
+The clinic lacked an informational directory detailing services, operating schedules, maps, and dental credentials. Patients had to call or message to find basic clinic info. This clean portal lists all crucial information in a highly readable, responsive structure.
+
+### Features
+- Fully responsive across mobile, tablets, and desktop monitors
+- Detailed directories for cosmetic, pediatric, and restorative dental surgeries
+- Clear scheduling details and embedded maps to find clinic locations easily
+- Deployed on Cloudflare Pages for reliable, fast delivery
+` },
+  { name: "apros-wellness-spa.md", type: "file", path: "/projects/apros-wellness-spa.md", icon: "file-text", content: `# Apros Wellness Spa
+
+Unified massage treatments directory and home/hotel package-booking platform.
+
+### Story & Purpose
+Apros Wellness Spa offers a wide range of massages, spa packages, wet area access slots, and hotels services, but this was difficult to navigate on social media. This responsive platform organizes all treatments into clean sections, enabling customers to easily browse choices.
+
+### Actions Taken
+- Categorized treatments and pricing into clear, interactive lists
+- Implemented mobile-responsive menus and direct messaging links for booking
+- Deployed on Cloudflare Pages for reliable global CDN speeds
+` },
+  { name: "mayas-flower-shop.md", type: "file", path: "/projects/mayas-flower-shop.md", icon: "file-text", content: `# Maya's Flower Shop
+
+Occasion-based bouquet showcase and image-focused floral digital catalog.
+
+### Story & Purpose
+The shop previously handled orders entirely through social media DMs, making it hard to browse arrangements or prices. During busy occasions (Valentine's, Mother's Day), manual inquiries piled up. This catalog solves this by grouping premium arrangements by occasion, allowing customers to browse and inquire with a single click.
+
+### Key Features
+- High-fidelity product grids optimized for mobile screens
+- Compressed assets maintaining premium image clarity without lag
+- Direct links to trigger messaging or inquiries for quick ordering
+- Deployed securely on Cloudflare Pages
+` },
+  { name: "aiced-cafe.md", type: "file", path: "/projects/aiced-cafe.md", icon: "file-text", content: `# Aiced Café
+
+Cozy single-page coffeehouse menu, operational schedule, and map locator.
+
+### Story & Purpose
+The café had no dedicated digital page for customers to quickly browse lattes, hot brews, pastries, or open hours. This beautiful single-page dashboard displays menus, hours, and maps, giving visitors everything they need in one place.
+
+### Actions Taken
+- Structured menus into high-contrast interactive lists
+- Embedded maps and coordinates for seamless walk-ins
+- Styled with cozy coffeehouse-branded warm colors and glass aesthetics
+- Hosted and delivered over Cloudflare Pages for optimal loading speeds
 ` }
 ];
 

@@ -18,7 +18,15 @@ export default function GalleryApp() {
       "portfolio-builder": "port-builder-scr-",
       "url-kilatis": "url-kilatis-scr-",
       "bantay-bills": "bantay-bills-scr-",
-      "tingin-cv": "tingin-cv-scr-"
+      "tingin-cv": "tingin-cv-scr-",
+      "ads-alis": "ads-alis-scr-",
+      "flexi-dash": "flexi-dash-scr-",
+      "rian-fernandez": "rian-fernandez-scr-",
+      "mjn-salon": "mjn-salon-scr-",
+      "nunez-dental": "nunez-dental-scr-",
+      "apros-spa": "apros-spa-scr-",
+      "mayas-flower": "mayas-flower-scr-",
+      "aiced-cafe": "aiced-cafe-scr-"
     };
     const prefix = prefixMap[projectId];
     return prefix ? galleryItems.filter((item) => item.id.startsWith(prefix)) : [];
@@ -404,7 +412,7 @@ export default function GalleryApp() {
                   <div className="flex items-center gap-1.5 truncate">
                     <Lock className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                     <span className="truncate text-neutral-300">
-                      portfolioos.org/gallery/{lightboxItems[lightboxIndex].id}
+                      melmar-portfolio.vercel.app/gallery/{lightboxItems[lightboxIndex].id}
                     </span>
                   </div>
                   <button 

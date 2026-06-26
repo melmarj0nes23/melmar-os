@@ -98,7 +98,7 @@ export default function TerminalApp() {
         addTerminalLog({
           id: `out-${Date.now()}`,
           type: "output",
-          text: "guest_visitor@portfolioos.org // Connected Port: 3000 Ingress Node // Security: Standard Read Access",
+          text: "guest_visitor@melmar-portfolio.vercel.app // Connected Port: 3000 Ingress Node // Security: Standard Read Access",
         });
         break;
 

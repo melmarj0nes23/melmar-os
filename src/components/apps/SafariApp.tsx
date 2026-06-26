@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight, RotateCw, Globe, Shield, Star, ExternalLink, Git
 export default function SafariApp() {
   const { addNotification, settings, openApp } = useOS();
   const [activeProject, setActiveProject] = useState<ProjectData>(projectsData[0]);
-  const [addressVal, setAddressVal] = useState(`https://portfolioos.org/projects/all#${projectsData[0].id}`);
+  const [addressVal, setAddressVal] = useState(`https://melmar-portfolio.vercel.app/projects/all#${projectsData[0].id}`);
   const [history, setHistory] = useState<string[]>([projectsData[0].id]);
   const [historyIndex, setHistoryIndex] = useState(0);
   
@@ -47,7 +47,7 @@ export default function SafariApp() {
 
   // Smooth scroll helper with dynamic offset calculation
   const scrollToProjectInternal = (projectId: string) => {
-    setAddressVal(`https://portfolioos.org/projects/all#${projectId}`);
+    setAddressVal(`https://melmar-portfolio.vercel.app/projects/all#${projectId}`);
     
     // Smoothly scroll to the target project
     const container = document.getElementById("safari-scroll-container");
@@ -113,7 +113,7 @@ export default function SafariApp() {
         });
 
         setActiveProject(currentActive);
-        setAddressVal(`https://portfolioos.org/projects/all#${currentActive.id}`);
+        setAddressVal(`https://melmar-portfolio.vercel.app/projects/all#${currentActive.id}`);
       }, 80);
     };
 
