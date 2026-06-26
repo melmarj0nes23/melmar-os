@@ -228,6 +228,42 @@ export default function Desktop() {
               Crafting type-safe web dashboards, visual canvas animations, and server pipelines.
             </p>
           </div>
+
+          {/* Live Calendar Widget */}
+          <div className="col-span-2 bg-black/35 backdrop-blur-xl border border-white/10 p-3.5 rounded-2xl flex flex-col">
+            <div className="flex items-center justify-between border-b border-white/5 pb-2 mb-2">
+              <span className="text-[9px] font-mono font-bold tracking-widest text-neutral-400 uppercase flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-rose-400" /> CALENDAR
+              </span>
+              <span className="text-xs font-bold text-rose-400">{currentMonthName} {currentYear}</span>
+            </div>
+            
+            <div className="grid grid-cols-7 gap-y-1 text-center text-[10px]">
+              {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
+                <span key={d} className="text-neutral-500 font-bold font-mono uppercase text-[9px]">{d}</span>
+              ))}
+              {calendarCells.map((day, idx) => {
+                const isToday = day === currentDay;
+                return (
+                  <div key={idx} className="flex items-center justify-center h-4.5 w-4.5 mx-auto">
+                    {day ? (
+                      <span 
+                        className={`text-[10px] font-semibold rounded-full w-4.5 h-4.5 flex items-center justify-center ${
+                          isToday 
+                            ? "bg-rose-500 text-white font-extrabold shadow-md shadow-rose-500/30" 
+                            : "text-neutral-200 hover:bg-white/5 cursor-default"
+                        }`}
+                      >
+                        {day}
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* HOME SCREEN APPLICATION GRID SHORTCUTS */}

@@ -159,6 +159,11 @@ export default function Dock() {
                   />
                 )}
               </motion.button>
+
+              {/* Persistent App Name for Web/Desktop View */}
+              <span className="hidden sm:block text-[9px] font-semibold text-neutral-300/90 tracking-wide mt-1 select-none text-center truncate max-w-[54px]">
+                {item.id === "safari" ? "Safari" : item.label}
+              </span>
             </div>
           );
         })}
@@ -228,6 +233,11 @@ export default function Dock() {
               />
             )}
           </motion.button>
+
+          {/* Persistent App Name for Web/Desktop View */}
+          <span className="hidden sm:block text-[9px] font-semibold text-neutral-300/90 tracking-wide mt-1 select-none text-center truncate max-w-[54px]">
+            Resume
+          </span>
         </div>
 
         {/* Trash Bin */}
@@ -254,6 +264,11 @@ export default function Dock() {
           >
             <Trash2 className="w-5.5 h-5.5" />
           </motion.button>
+
+          {/* Persistent App Name for Web/Desktop View */}
+          <span className="hidden sm:block text-[9px] font-semibold text-neutral-300/90 tracking-wide mt-1 select-none text-center truncate max-w-[54px]">
+            Trash
+          </span>
         </div>
       </div>
     </div>

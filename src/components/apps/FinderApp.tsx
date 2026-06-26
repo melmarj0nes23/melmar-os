@@ -47,7 +47,7 @@ export default function FinderApp() {
       setCurrentPath(node.path);
       setSelectedNode(null);
     } else {
-      if (node.name.endsWith(".pdf") || node.name === "resume.txt") {
+      if (node.name.endsWith(".pdf")) {
         openApp("pdf");
         addNotification(`Opened ${node.name} in PDF Previewer`);
       } else {
@@ -509,7 +509,7 @@ export default function FinderApp() {
                           ) : (
                             <FileText className="w-10 h-10 text-amber-400 mb-2 filter drop-shadow-md" />
                           )}
-                          <span className="text-[10px] sm:text-[11px] font-medium leading-tight text-neutral-200 select-none truncate max-w-full px-1">
+                          <span className="w-full block text-center text-[10px] sm:text-[11px] font-medium leading-tight text-neutral-200 select-none truncate px-1">
                             {node.name}
                           </span>
                         </div>

@@ -24,7 +24,7 @@ export default function VSCodeApp() {
     }
     return [activeFile];
   });
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Default closed on mobile, open/closed toggleable
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Open by default on all screens so visitors can find files instantly
 
   // Sync external file load event (e.g. from Finder or Spotlight)
   useEffect(() => {

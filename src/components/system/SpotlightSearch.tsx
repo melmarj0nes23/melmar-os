@@ -62,7 +62,7 @@ export default function SpotlightSearch() {
       description: `VFS File // Location: ${node.path}`,
       icon: FileCode,
       action: () => {
-        if (node.name.endsWith(".pdf") || node.name === "resume.txt") {
+        if (node.name.endsWith(".pdf")) {
           openApp("pdf");
         } else {
           openApp("vscode");
