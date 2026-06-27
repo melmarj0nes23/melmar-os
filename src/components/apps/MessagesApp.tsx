@@ -73,7 +73,7 @@ export default function MessagesApp() {
   // Set up real-time listener to Firestore collection
   useEffect(() => {
     const messagesCollection = collection(db, "messages");
-    const q = query(messagesCollection, orderBy("timestamp", "asc"), limit(100));
+    const q = query(messagesCollection, orderBy("timestamp", "desc"), limit(100));
 
     const unsubscribe = onSnapshot(
       q,
@@ -90,6 +90,9 @@ export default function MessagesApp() {
             emoji: data.emoji || "💬",
           });
         });
+        
+        // Reverse so that the latest messages are at the bottom of the chat view
+        msgsList.reverse();
         setMessages(msgsList);
         setLoading(false);
         // Scroll to bottom when new messages arrive
