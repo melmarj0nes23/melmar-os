@@ -162,6 +162,16 @@ async function startServer() {
     res.json(contactMessages);
   });
 
+  // API Route: Verify admin authentication key securely without exposing it in front-end client code
+  app.post("/api/admin/verify", (req, res) => {
+    const { key } = req.body;
+    const expectedKey = process.env.ADMIN_KEY || "A@11111a";
+    if (key === expectedKey) {
+      return res.json({ success: true, message: "Authentication successful." });
+    }
+    return res.status(401).json({ success: false, error: "Invalid authorization key." });
+  });
+
   app.post("/api/contact/send", (req, res) => {
     const { senderName, senderEmail, subject, message } = req.body;
     if (!senderName || !senderEmail || !message) {

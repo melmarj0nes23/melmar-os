@@ -194,17 +194,36 @@ export default function MessagesApp() {
     }, 2000);
   };
 
-  // Verify the admin key
-  const handleAdminVerify = () => {
-    if (adminKeyInput === "A@11111a") {
-      setIsAdmin(true);
-      localStorage.setItem("messages_admin_auth", "true");
-      addNotification("Admin privileges granted successfully.");
-      setShowAdminModal(false);
-      setAdminKeyInput("");
-      setAdminError("");
-    } else {
-      setAdminError("Invalid authorization key.");
+  // Verify the admin key securely via the backend API to avoid hardcoding in client bundles
+  const handleAdminVerify = async () => {
+    if (!adminKeyInput.trim()) {
+      setAdminError("Please enter a key.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/admin/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ key: adminKeyInput }),
+      });
+
+      if (response.ok) {
+        setIsAdmin(true);
+        localStorage.setItem("messages_admin_auth", "true");
+        addNotification("Admin privileges granted successfully.");
+        setShowAdminModal(false);
+        setAdminKeyInput("");
+        setAdminError("");
+      } else {
+        const data = await response.json();
+        setAdminError(data.error || "Invalid authorization key.");
+      }
+    } catch (err) {
+      console.error("Admin verification error:", err);
+      setAdminError("Failed to reach server. Please try again.");
     }
   };
 
