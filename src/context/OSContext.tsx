@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { OSWindow, OSSettings, TerminalLog, MailMessage } from "../types";
 
 interface OSContextProps {
@@ -304,18 +304,18 @@ export function OSProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Notification Core
-  const addNotification = (text: string) => {
+  const removeNotification = useCallback((id: string) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  }, []);
+
+  const addNotification = useCallback((text: string) => {
     const id = `notif-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
     setNotifications((prev) => [{ id, text, timestamp: new Date() }, ...prev]);
     // Auto-prune notifications after 4 seconds
     setTimeout(() => {
       removeNotification(id);
     }, 4000);
-  };
-
-  const removeNotification = (id: string) => {
-    setNotifications((prev) => prev.filter((n) => n.id !== id));
-  };
+  }, [removeNotification]);
 
   const toggleSpotlight = (val?: boolean) => {
     setSpotlightOpen((prev) => (val !== undefined ? val : !prev));
