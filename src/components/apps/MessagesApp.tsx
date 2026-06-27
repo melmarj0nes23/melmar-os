@@ -7,9 +7,11 @@ import {
   orderBy, 
   limit, 
   onSnapshot, 
-  serverTimestamp 
+  serverTimestamp,
+  doc,
+  deleteDoc
 } from "firebase/firestore";
-import { Send, MessageSquare, AlertCircle, Sparkles, User, Loader2, ArrowDown } from "lucide-react";
+import { Send, MessageSquare, AlertCircle, Sparkles, User, Loader2, ArrowDown, Trash2, ShieldAlert, X, Key } from "lucide-react";
 import { useOS } from "../../context/OSContext";
 import { motion } from "motion/react";
 
@@ -44,13 +46,25 @@ export default function MessagesApp() {
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<"write" | "messages">("messages");
 
+  // Admin access states
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [adminKeyInput, setAdminKeyInput] = useState("");
+  const [adminError, setAdminError] = useState("");
+  const [clickCount, setClickCount] = useState(0);
+  const clickTimeoutRef = useRef<any>(null);
+
   const listEndRef = useRef<HTMLDivElement>(null);
 
-  // Load name from localStorage so returning visitors don't have to re-type it
+  // Load name and admin state from localStorage so returning visitors don't have to re-type it
   useEffect(() => {
     const savedName = localStorage.getItem("guestbook_name");
     if (savedName) {
       setName(savedName);
+    }
+    const adminAuth = localStorage.getItem("messages_admin_auth");
+    if (adminAuth === "true") {
+      setIsAdmin(true);
     }
   }, []);
 
@@ -158,6 +172,69 @@ export default function MessagesApp() {
       }
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  // Trigger secret admin modal on 5 rapid clicks
+  const handleSecretTrigger = () => {
+    setClickCount((prev) => {
+      const nextCount = prev + 1;
+      if (nextCount >= 5) {
+        setShowAdminModal(true);
+        return 0;
+      }
+      return nextCount;
+    });
+
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+    clickTimeoutRef.current = setTimeout(() => {
+      setClickCount(0);
+    }, 2000);
+  };
+
+  // Verify the admin key
+  const handleAdminVerify = () => {
+    if (adminKeyInput === "A@11111a") {
+      setIsAdmin(true);
+      localStorage.setItem("messages_admin_auth", "true");
+      addNotification("Admin privileges granted successfully.");
+      setShowAdminModal(false);
+      setAdminKeyInput("");
+      setAdminError("");
+    } else {
+      setAdminError("Invalid authorization key.");
+    }
+  };
+
+  // Revoke admin session
+  const handleAdminLogout = () => {
+    setIsAdmin(false);
+    localStorage.removeItem("messages_admin_auth");
+    addNotification("Admin privileges revoked.");
+    setShowAdminModal(false);
+    setAdminKeyInput("");
+    setAdminError("");
+  };
+
+  // Delete message document from Firestore
+  const handleDeleteMessage = async (msgId: string) => {
+    if (!window.confirm("Are you sure you want to permanently delete this message? This action is irreversible.")) {
+      return;
+    }
+
+    try {
+      await deleteDoc(doc(db, "messages", msgId));
+      addNotification("Message deleted successfully!");
+    } catch (err) {
+      console.error("Error deleting message:", err);
+      addNotification("Failed to delete message. Permissions check failed.");
+      try {
+        handleFirestoreError(err, OperationType.DELETE, `messages/${msgId}`);
+      } catch (e) {
+        // Logged inside helper
+      }
     }
   };
 
@@ -328,7 +405,10 @@ export default function MessagesApp() {
           activeTab === "messages" ? "flex" : "hidden md:flex"
         }`}>
           <div className="p-4 bg-[#110f0e]/50 border-b border-white/5 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-2">
+            <div 
+              onClick={handleSecretTrigger} 
+              className="flex items-center gap-2 cursor-pointer select-none active:opacity-80 transition-opacity"
+            >
               <div className="relative flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-neutral-300" />
                 <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-[#090807] animate-pulse" />
@@ -402,6 +482,15 @@ export default function MessagesApp() {
                             </span>
                           </div>
                         </div>
+                        {isAdmin && (
+                          <button
+                            onClick={() => handleDeleteMessage(msg.id)}
+                            className="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 border border-rose-500/20 transition-all cursor-pointer shadow-sm shrink-0"
+                            title="Delete message"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
                       </div>
                       
                       <p className="text-xs text-neutral-200 leading-relaxed font-normal whitespace-pre-wrap break-words">
@@ -416,6 +505,97 @@ export default function MessagesApp() {
           </div>
         </div>
       </div>
+
+      {/* Hidden Admin Modal */}
+      {showAdminModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-[#1c1917] border border-white/10 p-6 rounded-2xl w-full max-w-sm shadow-2xl space-y-4"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-rose-400">
+                <ShieldAlert className="w-5 h-5" />
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">System Verification</h3>
+              </div>
+              <button 
+                onClick={() => {
+                  setShowAdminModal(false);
+                  setAdminKeyInput("");
+                  setAdminError("");
+                }}
+                className="p-1 hover:bg-white/5 rounded-lg text-neutral-400 hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              {isAdmin 
+                ? "You currently have administrator privileges. You can revoke them below."
+                : "Enter the system authentication key to unlock administrative capabilities."
+              }
+            </p>
+
+            {!isAdmin ? (
+              <div className="space-y-3">
+                <div className="relative">
+                  <input
+                    type="password"
+                    placeholder="Enter authentication key"
+                    value={adminKeyInput}
+                    onChange={(e) => {
+                      setAdminKeyInput(e.target.value);
+                      setAdminError("");
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleAdminVerify();
+                      }
+                    }}
+                    className="w-full bg-[#0c0a09] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-neutral-500 outline-none focus:border-rose-500/50 transition-all duration-200"
+                    autoFocus
+                  />
+                  <Key className="absolute left-3.5 top-3 w-4 h-4 text-neutral-500 pointer-events-none" />
+                </div>
+                {adminError && (
+                  <p className="text-[10px] text-rose-400 font-mono flex items-center gap-1">
+                    <AlertCircle className="w-3.5 h-3.5" /> {adminError}
+                  </p>
+                )}
+                <div className="flex gap-2 pt-1">
+                  <button
+                    onClick={() => {
+                      setShowAdminModal(false);
+                      setAdminKeyInput("");
+                      setAdminError("");
+                    }}
+                    className="flex-1 py-2 rounded-xl text-xs bg-[#2e2a28] hover:bg-[#3e3936] text-neutral-300 transition-all cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAdminVerify}
+                    className="flex-1 py-2 rounded-xl text-xs bg-rose-500 hover:bg-rose-600 text-white font-bold transition-all cursor-pointer"
+                  >
+                    Verify
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <button
+                  onClick={handleAdminLogout}
+                  className="w-full py-2.5 rounded-xl text-xs bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 font-bold border border-rose-500/20 transition-all cursor-pointer"
+                >
+                  Revoke Admin Privileges
+                </button>
+              </div>
+            )}
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
