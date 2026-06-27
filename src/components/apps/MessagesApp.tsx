@@ -111,10 +111,10 @@ export default function MessagesApp() {
     return () => unsubscribe();
   }, [addNotification]);
 
-  // Check for blocked words (profanity filter for specified Tagalog words)
+  // Check for blocked words (profanity filter for specified words)
   const checkProfanity = (inputText: string): boolean => {
     const normalized = inputText.toLowerCase().replace(/[\s\-_.,?!@#$^*()[\]{}]+/g, "");
-    const blockedWords = ["putangina", "tangina", "puta", "titi", "tite", "burat"];
+    const blockedWords = ["putangina", "tangina", "puta", "titi", "tite", "burat", "pornhub", "porn", "sex", "youjizz"];
     
     // Check if the exact words are present
     const words = inputText.toLowerCase().split(/[\s\-_.,?!@#$^*()[\]{}]+/);
@@ -123,19 +123,19 @@ export default function MessagesApp() {
     }
 
     // Check if substring is present for long unambiguous words
-    const unambiguousWords = ["putangina", "tangina", "burat"];
+    const unambiguousWords = ["putangina", "tangina", "burat", "pornhub", "youjizz"];
     if (unambiguousWords.some(word => normalized.includes(word))) {
       return true;
     }
 
     // Regex check with word boundaries to avoid false positives (e.g., "reputation", "partition")
-    const regexPattern = /\b(p+u+t+a+|t+i+t+i+|t+i+t+e+|b+u+r+a+t+|p+u+t+a+n+g+i+n+a+|t+a+n+g+i+n+a+)\b/i;
+    const regexPattern = /\b(p+u+t+a+|t+i+t+i+|t+i+t+e+|b+u+r+a+t+|p+u+t+a+n+g+i+n+a+|t+a+n+g+i+n+a+|p+o+r+n+h+u+b+|p+o+r+n+|s+e+x+|y+o+u+j+i+z+z+)\b/i;
     if (regexPattern.test(inputText)) {
       return true;
     }
 
-    // Spacey / sneaky variations: e.g. "p.u.t.a", "p u t a", "t_i_t_i"
-    const spacesAndDotsPattern = /\b(p\s*[.\-_]*\s*u\s*[.\-_]*\s*t\s*[.\-_]*\s*a|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*i|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*e)\b/i;
+    // Spacey / sneaky variations: e.g. "p.u.t.a", "p u t a", "t_i_t_i", "s.e.x", "p.o.r.n"
+    const spacesAndDotsPattern = /\b(p\s*[.\-_]*\s*u\s*[.\-_]*\s*t\s*[.\-_]*\s*a|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*i|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*e|s\s*[.\-_]*\s*e\s*[.\-_]*\s*x|p\s*[.\-_]*\s*o\s*[.\-_]*\s*r\s*[.\-_]*\s*n)\b/i;
     if (spacesAndDotsPattern.test(inputText)) {
       return true;
     }
