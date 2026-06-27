@@ -43,6 +43,7 @@ export default function MessagesApp() {
   const [selectedColor, setSelectedColor] = useState(PRESET_COLORS[0].value);
   const [selectedEmoji, setSelectedEmoji] = useState(PRESET_EMOJIS[0]);
   const [nameError, setNameError] = useState("");
+  const [messageError, setMessageError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState<"write" | "messages">("messages");
 
@@ -110,6 +111,38 @@ export default function MessagesApp() {
     return () => unsubscribe();
   }, [addNotification]);
 
+  // Check for blocked words (profanity filter for specified Tagalog words)
+  const checkProfanity = (inputText: string): boolean => {
+    const normalized = inputText.toLowerCase().replace(/[\s\-_.,?!@#$^*()[\]{}]+/g, "");
+    const blockedWords = ["putangina", "tangina", "puta", "titi", "tite", "burat"];
+    
+    // Check if the exact words are present
+    const words = inputText.toLowerCase().split(/[\s\-_.,?!@#$^*()[\]{}]+/);
+    if (words.some(w => blockedWords.includes(w))) {
+      return true;
+    }
+
+    // Check if substring is present for long unambiguous words
+    const unambiguousWords = ["putangina", "tangina", "burat"];
+    if (unambiguousWords.some(word => normalized.includes(word))) {
+      return true;
+    }
+
+    // Regex check with word boundaries to avoid false positives (e.g., "reputation", "partition")
+    const regexPattern = /\b(p+u+t+a+|t+i+t+i+|t+i+t+e+|b+u+r+a+t+|p+u+t+a+n+g+i+n+a+|t+a+n+g+i+n+a+)\b/i;
+    if (regexPattern.test(inputText)) {
+      return true;
+    }
+
+    // Spacey / sneaky variations: e.g. "p.u.t.a", "p u t a", "t_i_t_i"
+    const spacesAndDotsPattern = /\b(p\s*[.\-_]*\s*u\s*[.\-_]*\s*t\s*[.\-_]*\s*a|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*i|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*e)\b/i;
+    if (spacesAndDotsPattern.test(inputText)) {
+      return true;
+    }
+
+    return false;
+  };
+
   // Handle name input validation (strict alphabet restriction)
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const originalValue = e.target.value;
@@ -119,6 +152,8 @@ export default function MessagesApp() {
 
     if (originalValue !== cleaned) {
       setNameError("Only letters (A-Z, a-z) and spaces are allowed.");
+    } else if (checkProfanity(cleaned)) {
+      setNameError("Please use an appropriate name.");
     } else {
       setNameError("");
     }
@@ -140,7 +175,18 @@ export default function MessagesApp() {
       return;
     }
 
+    if (checkProfanity(trimmedName)) {
+      setNameError("Please use an appropriate name.");
+      return;
+    }
+
     if (!trimmedText) {
+      return;
+    }
+
+    if (checkProfanity(trimmedText)) {
+      setMessageError("Message contains inappropriate language.");
+      addNotification("Please keep the chat friendly.");
       return;
     }
 
@@ -159,6 +205,7 @@ export default function MessagesApp() {
 
       setText("");
       setNameError("");
+      setMessageError("");
       addNotification("Your message was posted successfully!");
       setActiveTab("messages");
       setTimeout(scrollToBottom, 150);
@@ -343,12 +390,25 @@ export default function MessagesApp() {
                   id="visitor-message"
                   maxLength={400}
                   value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setText(val);
+                    if (checkProfanity(val)) {
+                      setMessageError("Message contains inappropriate language.");
+                    } else {
+                      setMessageError("");
+                    }
+                  }}
                   placeholder="Write your greeting..."
                   rows={3}
                   className="w-full bg-[#1c1917]/90 border border-white/10 rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-white placeholder-neutral-500 outline-none focus:border-rose-500/50 transition-all duration-200 resize-none"
                   required
                 />
+                {messageError && (
+                  <p className="text-[10px] text-rose-400 mt-1 flex items-center gap-1">
+                    <AlertCircle className="w-3.5 h-3.5" /> {messageError}
+                  </p>
+                )}
               </div>
 
               {/* Color Accent Picker */}
@@ -400,7 +460,7 @@ export default function MessagesApp() {
 
               <button
                 type="submit"
-                disabled={submitting || !name.trim() || !text.trim() || !!nameError}
+                disabled={submitting || !name.trim() || !text.trim() || !!nameError || !!messageError}
                 className="w-full py-2.5 px-4 bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-rose-950/40 hover:shadow-rose-950/60 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {submitting ? (
