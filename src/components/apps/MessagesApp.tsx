@@ -9,7 +9,8 @@ import {
   onSnapshot, 
   serverTimestamp,
   doc,
-  deleteDoc
+  deleteDoc,
+  setDoc
 } from "firebase/firestore";
 import { Send, MessageSquare, AlertCircle, Sparkles, User, Loader2, ArrowDown, Trash2, ShieldAlert, X, Key } from "lucide-react";
 import { useOS } from "../../context/OSContext";
@@ -112,9 +113,71 @@ export default function MessagesApp() {
   }, [addNotification]);
 
   // Check for blocked words (profanity filter for specified words)
+  const [blockedWords, setBlockedWords] = useState<string[]>([
+    "putangina", "tangina", "puta", "titi", "tite", "burat", "pornhub", "porn", "sex", "youjizz"
+  ]);
+  const [newWordInput, setNewWordInput] = useState("");
+
+  // Sync blocked words configuration with Firestore in real-time
+  useEffect(() => {
+    const unsubConfig = onSnapshot(
+      doc(db, "config", "blocked_words"),
+      async (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          if (Array.isArray(data.words)) {
+            setBlockedWords(data.words);
+          }
+        } else {
+          // Initialize in database if missing
+          try {
+            await setDoc(doc(db, "config", "blocked_words"), {
+              words: ["putangina", "tangina", "puta", "titi", "tite", "burat", "pornhub", "porn", "sex", "youjizz"]
+            });
+          } catch (err) {
+            console.error("Failed to seed config:", err);
+          }
+        }
+      },
+      (err) => {
+        console.error("Firestore config subscription error:", err);
+      }
+    );
+    return () => unsubConfig();
+  }, []);
+
+  const handleAddBlockedWord = async () => {
+    const word = newWordInput.trim().toLowerCase();
+    if (!word) return;
+    if (blockedWords.includes(word)) {
+      addNotification("Word is already blocklisted.");
+      return;
+    }
+    const updated = [...blockedWords, word];
+    try {
+      await setDoc(doc(db, "config", "blocked_words"), { words: updated });
+      addNotification(`Added "${word}" to blocklist.`);
+      setNewWordInput("");
+    } catch (err) {
+      console.error("Error saving blocklist:", err);
+      addNotification("Failed to save to database.");
+    }
+  };
+
+  const handleRemoveBlockedWord = async (wordToRemove: string) => {
+    const updated = blockedWords.filter(w => w !== wordToRemove);
+    try {
+      await setDoc(doc(db, "config", "blocked_words"), { words: updated });
+      addNotification(`Removed "${wordToRemove}" from blocklist.`);
+    } catch (err) {
+      console.error("Error saving blocklist:", err);
+      addNotification("Failed to save to database.");
+    }
+  };
+
   const checkProfanity = (inputText: string): boolean => {
+    if (!blockedWords || blockedWords.length === 0) return false;
     const normalized = inputText.toLowerCase().replace(/[\s\-_.,?!@#$^*()[\]{}]+/g, "");
-    const blockedWords = ["putangina", "tangina", "puta", "titi", "tite", "burat", "pornhub", "porn", "sex", "youjizz"];
     
     // Check if the exact words are present
     const words = inputText.toLowerCase().split(/[\s\-_.,?!@#$^*()[\]{}]+/);
@@ -122,22 +185,33 @@ export default function MessagesApp() {
       return true;
     }
 
-    // Check if substring is present for long unambiguous words
-    const unambiguousWords = ["putangina", "tangina", "burat", "pornhub", "youjizz"];
-    if (unambiguousWords.some(word => normalized.includes(word))) {
+    // Check if substring is present for unambiguous words of length >= 5
+    if (blockedWords.some(word => word.length >= 5 && normalized.includes(word))) {
       return true;
     }
 
-    // Regex check with word boundaries to avoid false positives (e.g., "reputation", "partition")
-    const regexPattern = /\b(p+u+t+a+|t+i+t+i+|t+i+t+e+|b+u+r+a+t+|p+u+t+a+n+g+i+n+a+|t+a+n+g+i+n+a+|p+o+r+n+h+u+b+|p+o+r+n+|s+e+x+|y+o+u+j+i+z+z+)\b/i;
-    if (regexPattern.test(inputText)) {
-      return true;
-    }
+    const escapeRegex = (str: string) => str.replace(/[/\-\\^$*+?.()|[\]{}]/g, '\\$&');
 
-    // Spacey / sneaky variations: e.g. "p.u.t.a", "p u t a", "t_i_t_i", "s.e.x", "p.o.r.n"
-    const spacesAndDotsPattern = /\b(p\s*[.\-_]*\s*u\s*[.\-_]*\s*t\s*[.\-_]*\s*a|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*i|t\s*[.\-_]*\s*i\s*[.\-_]*\s*t\s*[.\-_]*\s*e|s\s*[.\-_]*\s*e\s*[.\-_]*\s*x|p\s*[.\-_]*\s*o\s*[.\-_]*\s*r\s*[.\-_]*\s*n)\b/i;
-    if (spacesAndDotsPattern.test(inputText)) {
-      return true;
+    try {
+      // Dynamic boundary check regex \b(word1|word2|...)\b
+      const escapedWords = blockedWords.map(escapeRegex);
+      const regexPattern = new RegExp(`\\b(${escapedWords.join("|")})\\b`, "i");
+      if (regexPattern.test(inputText)) {
+        return true;
+      }
+
+      // Spacey / sneaky variations: e.g. "p.u.t.a", "p u t a", "t_i_t_i", "s.e.x"
+      for (const word of blockedWords) {
+        if (word.length >= 3) {
+          const pattern = word.split("").map(escapeRegex).join("\\s*[.\\-_]*\\s*");
+          const wordRegex = new RegExp(`\\b${pattern}\\b`, "i");
+          if (wordRegex.test(inputText)) {
+            return true;
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Regex build error:", e);
     }
 
     return false;
@@ -591,12 +665,14 @@ export default function MessagesApp() {
           <motion.div 
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-[#1c1917] border border-white/10 p-6 rounded-2xl w-full max-w-sm shadow-2xl space-y-4"
+            className={`bg-[#1c1917] border border-white/10 p-6 rounded-2xl w-full ${isAdmin ? "max-w-md" : "max-w-sm"} shadow-2xl space-y-4`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-rose-400">
                 <ShieldAlert className="w-5 h-5" />
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">System Verification</h3>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                  {isAdmin ? "Admin Control Panel" : "System Verification"}
+                </h3>
               </div>
               <button 
                 onClick={() => {
@@ -612,7 +688,7 @@ export default function MessagesApp() {
 
             <p className="text-xs text-neutral-400 leading-relaxed">
               {isAdmin 
-                ? "You currently have administrator privileges. You can revoke them below."
+                ? "You currently have administrator privileges. You can manage system directories and settings below."
                 : "Enter the system authentication key to unlock administrative capabilities."
               }
             </p>
@@ -663,13 +739,78 @@ export default function MessagesApp() {
                 </div>
               </div>
             ) : (
-              <div className="space-y-3">
-                <button
-                  onClick={handleAdminLogout}
-                  className="w-full py-2.5 rounded-xl text-xs bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 font-bold border border-rose-500/20 transition-all cursor-pointer"
-                >
-                  Revoke Admin Privileges
-                </button>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-xs font-bold text-neutral-300 mb-1.5 font-mono uppercase tracking-wide">
+                    Blocklisted Words Directory ({blockedWords.length})
+                  </h4>
+                  <p className="text-[10px] text-neutral-400 mb-3">
+                    These words are instantly filtered and blocked from being submitted in the visitor chatbox.
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto p-2.5 bg-[#0c0a09]/80 border border-white/5 rounded-xl">
+                    {blockedWords.length === 0 ? (
+                      <p className="text-[10px] text-neutral-500 font-mono italic p-1">No words are blocklisted.</p>
+                    ) : (
+                      blockedWords.map((word) => (
+                        <span 
+                          key={word} 
+                          className="inline-flex items-center gap-1 pl-2 pr-1.5 py-1 rounded-lg bg-neutral-900 border border-white/5 text-[10px] font-mono text-neutral-300"
+                        >
+                          {word}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveBlockedWord(word)}
+                            className="p-0.5 rounded-md hover:bg-rose-500/10 hover:text-rose-400 text-neutral-500 transition-all cursor-pointer"
+                            title={`Remove "${word}"`}
+                          >
+                            <X className="w-2.5 h-2.5" />
+                          </button>
+                        </span>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-neutral-400 font-mono uppercase tracking-wide block">
+                    Add New Blocklisted Word
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="e.g. badword"
+                      value={newWordInput}
+                      onChange={(e) => {
+                        // Keep word lowercase, strip spaces/symbols for simplicity
+                        setNewWordInput(e.target.value.toLowerCase().replace(/[^a-z0-9]/g, ""));
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleAddBlockedWord();
+                        }
+                      }}
+                      className="flex-1 bg-[#0c0a09] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-neutral-500 outline-none focus:border-rose-500/50 transition-all"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddBlockedWord}
+                      className="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-white/5">
+                  <button
+                    onClick={handleAdminLogout}
+                    className="w-full py-2.5 rounded-xl text-xs bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 font-bold border border-rose-500/20 transition-all cursor-pointer"
+                  >
+                    Revoke Admin Privileges
+                  </button>
+                </div>
               </div>
             )}
           </motion.div>
